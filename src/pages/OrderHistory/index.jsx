@@ -59,7 +59,7 @@ const OrderHistory = () => {
                                             {new Date(order.createdAt).toLocaleDateString('en-us', { year: "numeric", month: "long", day: "numeric" })}
                                         </td>
                                         <td>
-                                            ${order.totalPrice.toFixed(2)}
+                                            ${order.totalPrice}
                                         </td>
                                         <td>
                                             {order.isPaid ? new Date(order.paidAt).toLocaleDateString('en-us', { year: "numeric", month: "long", day: "numeric" }) : 'NOT Paid'}

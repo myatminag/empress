@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 const API = () => { 
 
-    const { isLoading, error, data } = useQuery('summary', async () => {
+    const { isLoading, error, data } = useQuery('home', async () => {
         const { data } = await axios.get(
             'https://empress-api.onrender.com/server/items'
         );

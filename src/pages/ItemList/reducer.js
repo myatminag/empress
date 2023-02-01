@@ -33,7 +33,7 @@ export const itemListReducer = (state, action) => {
             }
         case "FAIL_DELETE_ITEM":
             return {
-                ...state,
+                ...state, 
                 loadingDelete: false,
                 successDelete: false
             }

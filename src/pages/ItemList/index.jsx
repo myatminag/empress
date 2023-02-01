@@ -13,7 +13,7 @@ const AdminItemList = () => {
 
     const navigate = useNavigate();
 
-    const { state } = useContext(Context);
+    const { state } = useContext(Context); 
     const { userInfo } = state;
 
     // ?page=1

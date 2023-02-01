@@ -39,7 +39,7 @@ const Dashboard = () => {
                     <p className="font-[600] underline">
                         Daily Sales
                     </p>
-                    {data.dailyOrders.length === 0 ? (
+                    {data?.dailyOrders.length < 0 ? (
                         <p>
                             No Sales
                         </p>
