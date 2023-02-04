@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { AnimationLottie } from 'utils/animation';
-import { Loading, WebTitle, SubTitle } from 'components'; 
+import { WebTitle, SubTitle, Waiting } from 'components'; 
 import API from './api';
 
 const OrderHistory = () => {
@@ -11,7 +11,7 @@ const OrderHistory = () => {
 
     const { isLoading, error, data } = API();
 
-    if (isLoading) return <Loading />
+    if (isLoading) return <Waiting />
     
     if (error) return navigate('*')
 

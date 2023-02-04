@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { WebTitle, SubTitle, Loading, Summary, DataChart } from 'components';
+import { WebTitle, SubTitle, Loading, Summary, DataChart, Waiting } from 'components';
 import { useNavigate } from 'react-router-dom';
 import API from './api';
 
@@ -10,7 +10,7 @@ const Dashboard = () => {
 
     const{ isLoading, error, data } = API();
 
-    if (isLoading) return <Loading />
+    if (isLoading) return <Waiting />
     
     if (error) return navigate('*')
 

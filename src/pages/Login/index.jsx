@@ -10,7 +10,6 @@ import { WebTitle, ErrorField, SubTitle } from 'components';
 
 const Login = () => {
 
-    // after login, let the user to redirect current url
     const navigate = useNavigate();
 
     const { search } = useLocation();
@@ -19,7 +18,7 @@ const Login = () => {
 
     const { state , dispatch: authDispatch } = useContext(Context);
     const { userInfo } = state;
-
+ 
     useEffect(() => {
         if (userInfo) {
             navigate(redirect);
@@ -58,7 +57,7 @@ const Login = () => {
         }
     };
 
-    const { values, handleSubmit, handleChange, touched, errors, isSubmitting } = useFormik({
+    const { values, handleSubmit, handleChange, touched, errors } = useFormik({
         initialValues: {
             email: '',
             password: ''
@@ -70,7 +69,7 @@ const Login = () => {
 
     return (
         <section className="px-3 py-6 lg:px-6 mb-10">
-            <WebTitle title={"Login"} />
+            <WebTitle title={"Login"} />,
             <SubTitle name={"Login"} />
             <form onSubmit={handleSubmit} className="md:w-[450px] md:mx-auto">
                 <div className="mb-4">
@@ -122,7 +121,6 @@ const Login = () => {
                 </div>
                 <button 
                     type="submit"
-                    disabled={isSubmitting}
                     className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
                 >
                     {isLoading ? "Loading..." : "Login"}

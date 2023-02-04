@@ -6,6 +6,7 @@ export { default as Preloader } from './PreLoader';
 export { default as Navigation } from './Navigation';
 export { default as Logout } from './Logout';
 export { default as Loading } from './Loading';
+export { default as Waiting } from './Waiting';
 export { default as WebTitle } from './Helmet';
 export { default as Footer } from './Footer';
 export { default as Featured } from './Featured';

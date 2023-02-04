@@ -2,15 +2,15 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import API from './api';
-import { WebTitle, Card, Ads, Brand, Loading, Featured } from 'components';
+import { WebTitle, Card, Ads, Brand, Featured, Waiting } from 'components';
 
 const Item = () => {
-
+    
     const navigate = useNavigate();
 
     const { isLoading, error, data } = API();
 
-    if (isLoading) return <Loading />
+    if (isLoading) return <Waiting />
     
     if (error) return navigate('*')
 

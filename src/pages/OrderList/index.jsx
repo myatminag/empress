@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Context } from 'context/user-context';
 import { orderListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
-import { Loading, WebTitle, SubTitle} from 'components';
+import { WebTitle, SubTitle, Waiting} from 'components';
 
 const AdminOrderList = () => {
 
@@ -87,7 +87,7 @@ const AdminOrderList = () => {
             <WebTitle title={"Orders List"} />
             <SubTitle name={"Orders List"} />
             {loading ? (
-                <Loading />
+                <Waiting />
             ) : error ? (
                 navigate('*')
             ) : (

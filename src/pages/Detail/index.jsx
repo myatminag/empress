@@ -98,10 +98,12 @@ const ItemDetail = () => {
             dispatch({ type: "REQUEST_REVIEW" });
 
             const { data } = await axios.post(
-                `https://empress-api.onrender.com/server/items/${item._id}/reviews`, 
-                { rating, comment, name: userInfo.name }, 
-                { headers: { authorization: `Bearer ${userInfo.token}` } }
+                `http://localhost:4000/server/items/${item._id}/reviews`, 
+                { rating, comment, username: userInfo.user.username }, 
+                { headers: { authorization: `Bearer ${userInfo.user.token}` } }
             );
+
+            console.log(data);
             
             dispatch({ type: "SUCCESS_REVIEW" });
             toast.success("Review Submitted");
@@ -143,13 +145,13 @@ const ItemDetail = () => {
                                 alt={item.name}
                                 className="w-[50%] mb-12 mx-auto bg-secondaryWhite"
                             />
-                            <div className="flex items-center">
-                                {[...item.images].map(image => (
+                            <div className="grid grid-cols-3 lg:grid-cols-4">
+                                {[item.image, ...item.images].map(image => (
                                     <img 
                                         src={image}
                                         alt="images"
                                         onClick={() => setColor(image)}
-                                        className="w-[25%] p-3 mb-6 mx-auto bg-secondaryWhite"
+                                        className=" p-3 mb-6 mx-auto bg-secondaryWhite"
                                     />
                                 ))}
                             </div>
@@ -201,7 +203,7 @@ const ItemDetail = () => {
                     </div>
                     <hr className="my-6" />
                     <div className="lg:px-[20%]">
-                        <div className="py-4 px-4 mb-5 overflow-y-scroll scrollbar-none lg:mb-0 lg:col-span-1">
+                        <div className="py-4 mb-5 overflow-y-scroll scrollbar-none lg:mb-0 lg:col-span-1">
                             {userInfo ? (
                                 <form onSubmit={reviewSubmitHandler}>
                                     <p className="font-semibold mb-2">
@@ -218,7 +220,7 @@ const ItemDetail = () => {
                                             <option value="2">2- Fair</option>
                                             <option value="3">3- Good</option>
                                             <option value="4">4- Very good</option>
-                                            <option value="5">5- Excelent</option>
+                                            <option value="5">5- Excellent</option>
                                         </select>
                                     </div>
                                     <div className="mb-3">
@@ -274,7 +276,7 @@ const ItemDetail = () => {
                                             {review.createdAt.substring(0, 10)}
                                         </p>
                                         <p className="font-semibold">
-                                            {review.name}
+                                            {review.username}
                                         </p>
                                         <Rating rating={review.rating} caption=" " />
                                         <p>

@@ -8,7 +8,7 @@ const API = () => {
     const { state } = useContext(Context);
     const { userInfo } = state;
 
-    const { isLoading, error, data } = useQuery('summary', async () => {
+    const { isLoading, error, data } = useQuery('summary', async () => { 
         const { data } = await axios.get(
             'https://empress-api.onrender.com/server/orders/summary', {
                 headers: { authorization: `Bearer ${userInfo.user.token}` }

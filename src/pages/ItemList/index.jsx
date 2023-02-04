@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import { itemListReducer } from './reducer';
 import { Context } from 'context/user-context';
-import { Loading, WebTitle, SubTitle } from 'components';
+import { WebTitle, SubTitle, Waiting } from 'components';
 
 const AdminItemList = () => {
 
@@ -85,7 +85,7 @@ const AdminItemList = () => {
             <WebTitle title={"Item Lists"} />
             <SubTitle name={"Item Lists"} />
             {loading ? (
-                <Loading />
+                <Waiting />
             ) : error ? (
                 navigate('*')
             ) : (
