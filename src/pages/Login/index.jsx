@@ -69,7 +69,7 @@ const Login = () => {
 
     return (
         <section className="px-3 py-6 lg:px-6 mb-10">
-            <WebTitle title={"Login"} />,
+            <WebTitle title={"Login"} />
             <SubTitle name={"Login"} />
             <form onSubmit={handleSubmit} className="md:w-[450px] md:mx-auto">
                 <div className="mb-4">
