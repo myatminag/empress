@@ -139,7 +139,7 @@ const Login = () => {
                     <p className="text-sm text-secondaryDark">
                         Forget Password?
                     </p>
-                    <Link to='/forget-password'>
+                    <Link to='/forgetpassword'>
                         <p className="text-sm underline text-primaryDark">
                             Recover Password
                         </p>
