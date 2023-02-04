@@ -157,11 +157,11 @@ const Shop = () => {
                             <Typography>Categories</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Link to={filteringURL({ brand: 'all' })}>
+                            <Link to={filteringURL({ category: 'all' })}>
                                 <div className="flex items-center gap-x-2 mb-2">
                                     <input 
                                         type="radio"
-                                        checked={brand === 'all'}
+                                        checked={category === 'all'}
                                         className="cursor-pointer"
                                     />
                                     <label>
