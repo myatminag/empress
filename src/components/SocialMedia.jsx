@@ -1,13 +1,17 @@
 import React from 'react';
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
+
+import FacebookIcon from './icons/FacebookIcon';
+import TwitterIcon from './icons/TwitterIcon';
+import InstagramIcon from './icons/InstagramIcon';
+import YoutubeIcon from './icons/YoutubeIcon';
 
 const SocialMedia = () => {
     return (
         <div className="flex items-center gap-x-5">
-            <FaFacebook size={23} />
-            <FaTwitter size={23} />
-            <FaInstagram size={23} />
-            <FaYoutube size={23} />
+            <FacebookIcon />
+            <TwitterIcon />
+            <InstagramIcon />
+            <YoutubeIcon />
         </div>
     )
 };

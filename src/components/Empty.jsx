@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import EmptyCart from 'assets/empty_cart.svg';
+import EmptyCart from 'assets/svg/empty_cart.svg';
 
 const Empty = () => {
     return (

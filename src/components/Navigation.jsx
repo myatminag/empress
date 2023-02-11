@@ -5,9 +5,10 @@ import { motion } from 'framer-motion';
 import { FcAbout } from 'react-icons/fc';
 import { AiTwotoneCustomerService } from 'react-icons/ai';
 import { FaRegListAlt } from 'react-icons/fa';
-import { FiUser, FiSettings, FiLogIn, FiShoppingCart, FiUsers } from 'react-icons/fi';
+import { FiUser, FiSettings, FiLogIn, FiUsers } from 'react-icons/fi';
 import { MdOutlineAdminPanelSettings, MdOutlineBorderColor, MdOutlineProductionQuantityLimits, MdOutlineHistory } from 'react-icons/md';
 
+import CartIcon from './icons/CartIcon';
 import { Context } from 'context/user-context';
 import Logout from 'components/Logout';
 import SearchInput from 'components/SearchInput';
@@ -71,7 +72,7 @@ const Navigation = () => {
                     </Link>
                     <div className="relative">
                         <Link to={'/cart'}>
-                            <FiShoppingCart size={22} />
+                            <CartIcon />
                             {cart.cartItems.length > 0 && (
                                 <div className="absolute top-[-11px] right-[-10px] z-30 text-white text-xs bg-[#03045e] px-2 py-[1px] rounded-md">
                                     {cart.cartItems.reduce((accu, curItem) => accu + curItem.quantity, 0)}
