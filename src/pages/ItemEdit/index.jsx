@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 
 import { itemEditReducer } from './reducer';
-import { Context } from 'context/user-context';
 import { SubTitle, Editor, WebTitle, Loading, ErrorField } from 'components';
 
 const AdminItemEdit = (props) => {
 
-    const navigate = useNavigate();
+    const accessToken = localStorage.getItem("accessToken");
 
-    const { state } = useContext(Context); 
-    const { userInfo } = state; 
+    const navigate = useNavigate();
 
     // item/:id
     const params = useParams();
@@ -81,7 +79,7 @@ const AdminItemEdit = (props) => {
                     price, description, category, 
                     image, images, inStock
                 }, {
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
 
@@ -107,7 +105,7 @@ const AdminItemEdit = (props) => {
                 'http://localhost:4000/server/upload', formData, { 
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        authorization: `Bearer ${userInfo.user.token}`,
+                        authorization: `Bearer ${accessToken}`,
                     }
                 }
             );

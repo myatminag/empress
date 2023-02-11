@@ -16,6 +16,7 @@ const Logout = () => {
             type: "LOGOUT"
         });
         localStorage.removeItem('userInfo');
+        localStorage.removeItem('accessToken');
         localStorage.removeItem('cart');
         localStorage.removeItem('address');
         localStorage.removeItem('paymentMethod'); 

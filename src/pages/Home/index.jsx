@@ -10,9 +10,9 @@ const Item = () => {
 
     const { isLoading, error, data } = API();
 
-    if (isLoading) return <Waiting />
+    if (isLoading) return <Waiting />;
     
-    if (error) return navigate('*')
+    if (error) return navigate('*');
 
     return (
         <section className="">  

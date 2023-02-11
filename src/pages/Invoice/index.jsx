@@ -52,7 +52,7 @@ const Invoice = () => {
 
                 const { data } = await axios.put(
                     `https://empress-api.onrender.com/server/orders/${orderId}/pay`, details, {
-                        headers: { authorization: `Bearer ${userInfo.user.token}` }
+                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
 
@@ -87,7 +87,7 @@ const Invoice = () => {
 
                 const { data } = await axios.get(
                     `https://empress-api.onrender.com/server/orders/${orderId}`, {
-                        headers: { authorization: `Bearer ${userInfo.user.token}` }
+                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
 
@@ -123,7 +123,7 @@ const Invoice = () => {
             const loadingPaypal = async () => {
                 const { data: clientId } = await axios.get(
                     'https://empress-api.onrender.com/server/keys/paypal', {
-                        headers: { authorization: `Bearer ${userInfo.user.token}` }
+                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
  
@@ -151,7 +151,7 @@ const Invoice = () => {
 
             const { data } = await axios.put(
                 `https://empress-api.onrender.com/server/orders/${order._id}/delivery`, {} , {
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
 
@@ -178,7 +178,7 @@ const Invoice = () => {
                 <div>
                     <WebTitle title={`Invoice ${orderId}`} />
                     <div>
-                        {userInfo.user.isAdmin ? (
+                        {userInfo.isAdmin ? (
                             <div>
                                 <p className="mb-4 text-lg">
                                     Order Confirmed!
@@ -363,7 +363,7 @@ const Invoice = () => {
                                 </p>
                             </div>
                             <div className="lg:col-span-1">
-                                {userInfo.user.isAdmin !== true && !order.isPaid && (
+                                {userInfo.isAdmin !== true && !order.isPaid && (
                                     <div> 
                                         {pending ? (
                                             <p className="text-sm font-semibold text-center">
@@ -389,7 +389,7 @@ const Invoice = () => {
                                         )}
                                     </div>
                                 )}
-                                {userInfo.user.isAdmin === true && order.isPaid && !order.isDelivered && (
+                                {userInfo.isAdmin === true && order.isPaid && !order.isDelivered && (
                                     <motion.div whileTap={{ scale: 0.95 }}>
                                         {loadingDelivery && (
                                             <p className="text-sm font-semibold text-center">

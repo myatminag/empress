@@ -1,19 +1,11 @@
-import { useContext } from 'react';
-import axios from 'axios';
 import { useQuery } from 'react-query';
 
-import { Context } from 'context/user-context';
+import { request } from 'utils/axios';
 
 const API = () => { 
-    const { state } = useContext(Context);
-    const { userInfo } = state;
 
     const { isLoading, error, data } = useQuery('orderHistory', async () => {
-        const { data } = await axios.get(
-            'https://empress-api.onrender.com/server/orders/client', { 
-                headers: { authorization: `Bearer ${userInfo.user.token}` }
-            }
-        );
+        const { data } = await request({ url: '/server/orders/client' })
         return data;
     });
 

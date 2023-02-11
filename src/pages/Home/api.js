@@ -1,17 +1,16 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
+
+import { request } from 'utils/axios';
 
 const API = () => { 
 
     const { isLoading, error, data } = useQuery('home', async () => {
-        const { data } = await axios.get(
-            'https://empress-api.onrender.com/server/items'
-        );
+        const { data } = await request({ url: '/server/items' })
         return data;
     });
 
     return {
-        isLoading, error, data
+        isLoading, error, data 
     };
 };
 

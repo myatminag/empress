@@ -13,12 +13,13 @@ import { WebTitle, ErrorField, SubTitle } from 'components';
 
 const Profile = () => {
 
+    const accessToken = localStorage.getItem("accessToken");
+
     const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
-    const { state, dispatch: updateDispatch } = useContext(Context);
-    const { userInfo } = state;
+    const { dispatch: updateDispatch } = useContext(Context);
 
     const [{ loading }, dispatch] = useReducer(updateProfileReducer, {
         loading: false
@@ -30,16 +31,17 @@ const Profile = () => {
 
             const { data } = await axios.put(
                 'https://empress-api.onrender.com/server/user/profile', values, {
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
 
             updateDispatch({
                 type: "REQUEST_LOGIN",
-                payload: data
+                payload: data.user
             });
 
-            localStorage.setItem('userInfo', JSON.stringify(data)); 
+            localStorage.setItem('userInfo', JSON.stringify(data.user)); 
+            localStorage.setItem('accessToken', data.token);
             toast.success('Successfully Updated');
             navigate('/');
         } catch (error) {

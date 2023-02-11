@@ -6,6 +6,8 @@ import { Context } from 'context/user-context';
 
 const Stripe = ({ orderItems }) => {
 
+    const accessToken = localStorage.getItem("accessToken");
+
     const params = useParams();
     const { id: orderId } = params;
 
@@ -17,8 +19,8 @@ const Stripe = ({ orderItems }) => {
             const res = await axios.post(
                 `https://empress-api.onrender.com/server/payment/create-checkout-session/${orderId}`, {
                     orderItems,
-                    userId: userInfo.user._id,
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    userId: userInfo._id,
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
             localStorage.removeItem('cart');

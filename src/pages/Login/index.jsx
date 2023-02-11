@@ -29,7 +29,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [unauthorized, setUnauthorized] = useState(false); 
 
-    const onSubmit = async (values) => {
+    const onSubmit = async (values) => { 
         setIsLoading(true);
         try {
             const { data } = await axios.post(
@@ -38,13 +38,12 @@ const Login = () => {
 
             authDispatch({
                 type: "REQUEST_LOGIN",
-                payload: data
+                payload: data.user
             });
-
-            const res = { data };
-
-            if (res.data.success === true) {
-                localStorage.setItem('userInfo', JSON.stringify(data));
+            
+            if (data.success === true) {
+                localStorage.setItem('userInfo', JSON.stringify(data.user));
+                localStorage.setItem('accessToken', data.token)
                 navigate(redirect || '/');  
             }
 

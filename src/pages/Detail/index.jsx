@@ -97,10 +97,12 @@ const ItemDetail = () => {
         try {
             dispatch({ type: "REQUEST_REVIEW" });
 
+            const accessToken = localStorage.getItem("accessToken");
+
             const { data } = await axios.post(
-                `http://localhost:4000/server/items/${item._id}/reviews`, 
+                `https://empress-api.onrender.com/server/items/${item._id}/reviews`, 
                 { rating, comment, username: userInfo.user.username }, 
-                { headers: { authorization: `Bearer ${userInfo.user.token}` } }
+                { headers: { authorization: `Bearer ${accessToken}}` } }
             );
 
             console.log(data);

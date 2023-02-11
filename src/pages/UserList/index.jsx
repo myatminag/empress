@@ -1,21 +1,19 @@
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
  
-import { Context } from 'context/user-context';
 import { userListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components';
 
 const AdminUserList = () => {
 
-    const navigate = useNavigate();
+    const accessToken = localStorage.getItem("accessToken");
 
-    const { state } = useContext(Context);
-    const { userInfo } = state;
+    const navigate = useNavigate();
 
     // ?page=1
     const { search } = useLocation();
@@ -35,7 +33,7 @@ const AdminUserList = () => {
                 dispatch({ type: "REQUEST_USER_LIST" });
                 const { data } = await axios.get(
                     `https://empress-api.onrender.com/server/user/userslist?page=${page}`, {
-                        headers: { authorization: `Bearer ${userInfo.user.token}` }
+                        headers: { authorization: `Bearer ${accessToken}` }
                     }
                 );
 
@@ -59,7 +57,7 @@ const AdminUserList = () => {
         } else {
             fetchUserList();
         }
-    }, [userInfo, successDelete, page, navigate]);
+    }, [accessToken, successDelete, page, navigate]);
 
    // delete user
     const deleteUserHandler = async (user) => {
@@ -68,7 +66,7 @@ const AdminUserList = () => {
 
             await axios.delete(
                 `https://empress-api.onrender.com/server/user/userslist/${user._id}`, {
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
 

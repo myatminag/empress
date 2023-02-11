@@ -1,19 +1,17 @@
-import React, { useContext, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 
-import { Context } from 'context/user-context';
 import { uploadItemReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, ErrorField } from 'components';
 
 const NewItem = () => {
 
-    const navigate = useNavigate();
+    const accessToken = localStorage.getItem("accessToken");
 
-    const { state } = useContext(Context);
-    const { userInfo } = state;
+    const navigate = useNavigate();
      
     const [name, setName] = useState('');
     const [modelName, setModelName] = useState('');
@@ -43,7 +41,7 @@ const NewItem = () => {
 
             await axios.post(
                 'https://empress-api.onrender.com/server/items/create', itemData, { 
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
 
@@ -69,7 +67,7 @@ const NewItem = () => {
                 'https://empress-api.onrender.com/server/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        authorization: `Bearer ${userInfo.user.token}`,
+                        authorization: `Bearer ${accessToken}`,
                     }
                 }
             );

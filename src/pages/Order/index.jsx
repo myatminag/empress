@@ -8,10 +8,12 @@ import { WebTitle, SubTitle } from 'components';
 
 const Order = () => {
 
+    const accessToken = localStorage.getItem("accessToken")
+
     const navigate = useNavigate();
 
     const { state, dispatch: orderDispatch } = useContext(Context); 
-    const { cart, userInfo } = state;
+    const { cart } = state;
 
     /**
      * item price
@@ -46,7 +48,7 @@ const Order = () => {
         try {
             const { data } = await axios.post(
                 'https://empress-api.onrender.com/server/orders/new/', orderData, {
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
 

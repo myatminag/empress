@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { WebTitle, SubTitle, Loading, Summary, DataChart, Waiting } from 'components';
+import { WebTitle, SubTitle, Summary, DataChart, Waiting } from 'components';
 import { useNavigate } from 'react-router-dom';
 import API from './api';
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaTrashAlt, FaRegEdit } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
@@ -6,15 +6,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 import { itemListReducer } from './reducer';
-import { Context } from 'context/user-context';
 import { WebTitle, SubTitle, Waiting } from 'components';
 
 const AdminItemList = () => {
 
-    const navigate = useNavigate();
+    const accessToken = localStorage.getItem("accessToken");
 
-    const { state } = useContext(Context); 
-    const { userInfo } = state;
+    const navigate = useNavigate();
 
     // ?page=1
     const { search } = useLocation();
@@ -35,7 +33,7 @@ const AdminItemList = () => {
 
                 const { data } = await axios.get(
                     `https://empress-api.onrender.com/server/items/admin?page=${page}`, {
-                        headers: { authorization: `Bearer ${userInfo.user.token}` }
+                        headers: { authorization: `Bearer ${accessToken}` }
                     }
                 );
 
@@ -58,7 +56,7 @@ const AdminItemList = () => {
         } else {
             fetchItemList();
         }
-    }, [userInfo, page, successDelete, navigate]);
+    }, [page, successDelete, navigate, accessToken]);
 
     /** Delete Item */
     const deleteItemHandler = async (item) => {
@@ -67,7 +65,7 @@ const AdminItemList = () => {
 
             await axios.delete(
                 `https://empress-api.onrender.com/server/items/item/${item._id}`, {
-                    headers: { authorization: `Bearer ${userInfo.user.token}` }
+                    headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
 

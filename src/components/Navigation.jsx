@@ -19,7 +19,7 @@ const Navigation = () => {
     const { state } = useContext(Context);
     const { userInfo, cart } = state;
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false); 
 
     useEffect(() => {
         if (isOpen) {
@@ -99,7 +99,7 @@ const Navigation = () => {
                                     <li className="border-t flex items-center gap-x-3 px-6 py-3 bg-primaryDark">
                                         <FiUser size={21} color="white" />
                                         <p className="font-light text-white">
-                                            {userInfo.user.username}
+                                            {userInfo.username}
                                         </p>
                                     </li>
                                     {clientNavLink.map(link => {
@@ -145,7 +145,7 @@ const Navigation = () => {
                                     </Link>
                                 </ul>
                             )}
-                            {userInfo && userInfo.user.isAdmin && (
+                            {userInfo && userInfo.isAdmin && (
                                 <ul>
                                     {adminNavLink.map(link => {
                                         const Icons = link.icon;
