@@ -8,10 +8,10 @@ import axios from 'axios';
 import { userListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const AdminUserList = () => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const AdminUserList = () => {
             try {
                 dispatch({ type: "REQUEST_USER_LIST" });
                 const { data } = await axios.get(
-                    `https://empress-api.onrender.com/server/user/userslist?page=${page}`, {
+                    `${baseUrl}/server/user/userslist?page=${page}`, {
                         headers: { authorization: `Bearer ${accessToken}` }
                     }
                 );
@@ -48,7 +48,7 @@ const AdminUserList = () => {
                         ? error.res.data.message 
                         : error.message
                 });
-                console.log(error);
+                console.log(error); 
             }
         }
 

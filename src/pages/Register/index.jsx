@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Context } from 'context/user-context'; 
 import { SignupSchema } from 'validations';
 import { WebTitle, ErrorField, SubTitle } from 'components';
+import { baseUrl } from 'utils/baseUrl';
 
 const Login = () => {
 
@@ -34,7 +35,7 @@ const Login = () => {
         setIsLoading(true);
         try { 
             const { data } = await axios.post(
-                'https://empress-api.onrender.com/server/auth/register', values
+                `${baseUrl}/server/auth/register`, values
             );
 
             authDispatch({

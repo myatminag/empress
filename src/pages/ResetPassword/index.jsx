@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import { PasswordSchema } from 'validations/index';
 import { WebTitle, SubTitle, ErrorField } from 'components';
+import { baseUrl } from 'utils/baseUrl';
 
 const ResetPassword = () => {
 
@@ -19,7 +20,7 @@ const ResetPassword = () => {
     const onSubmit = async (values) => {
         try {
             await axios.put(
-                `https://empress-api.onrender.com/server/auth/reset-password/${resetToken}`, values
+                `${baseUrl}/server/auth/reset-password/${resetToken}`, values
             );
             
             navigate('/');

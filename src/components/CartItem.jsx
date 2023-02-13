@@ -5,6 +5,7 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 
 import { Context } from 'context/user-context';
+import { baseUrl } from 'utils/baseUrl';
 
 const CartItem = ({ item }) => {
 
@@ -13,7 +14,7 @@ const CartItem = ({ item }) => {
     const cartItemHandler = async (item, quantity) => {
         try {
             const { data } = await axios.get(
-                `https://empress-api.onrender.com/server/items/item/${item._id}`
+                `${baseUrl}/server/items/item/${item._id}`
             )
 
             if (data.inStock < quantity) {

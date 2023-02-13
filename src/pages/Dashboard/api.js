@@ -1,16 +1,21 @@
-import { useQuery } from 'react-query';
+import axios from "axios";
+import { useQuery } from "react-query";
 
-import { request } from 'utils/axios';
+import { baseUrl } from "utils/baseUrl";
+import { accessToken } from "utils/token";
 
 const API = () => {
-    
-    const { isLoading, error, data } = useQuery('summary', async () => { 
-        const { data } = await request({ url: 'server/orders/summary'})
+    const { isLoading, error, data } = useQuery("summary", async () => {
+        const { data } = await axios.get(`${baseUrl}/server/orders/summary`, {
+        headers: { authorization: `Bearer ${accessToken}` }
+    });
         return data;
     });
 
     return {
-        isLoading, error, data
+        isLoading,
+        error,
+        data,
     };
 };
 

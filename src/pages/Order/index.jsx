@@ -5,10 +5,10 @@ import axios from 'axios';
 import { orderReducer } from './reducer';
 import { Context } from 'context/user-context';
 import { WebTitle, SubTitle } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const Order = () => {
-
-    const accessToken = localStorage.getItem("accessToken")
 
     const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const Order = () => {
 
         try {
             const { data } = await axios.post(
-                'https://empress-api.onrender.com/server/orders/new/', orderData, {
+                `${baseUrl}/server/orders/new/`, orderData, {
                     headers: { authorization: `Bearer ${accessToken}` }
                 }
             );

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 
 import { Context } from 'context/user-context';
+import { baseUrl } from 'utils/baseUrl';
 
 const Card = ({ items }) => {
 
@@ -17,7 +18,7 @@ const Card = ({ items }) => {
             const existingItem = cartItems.find((x) => x._id === items._id);
             const quantity = existingItem ? existingItem.quantity + 1 : 1; 
             const { data } = await axios.get(
-                `https://empress-api.onrender.com/server/items/item/${item._id}`
+                `${baseUrl}/server/items/item/${item._id}`
             )
 
             if (data.inStock < quantity) {

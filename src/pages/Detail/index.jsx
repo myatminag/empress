@@ -8,6 +8,8 @@ import parse from 'html-react-parser';
 import { Context } from 'context/user-context';
 import { itemDetailReducer } from './reducer';
 import { Rating, Loading, WebTitle, Description } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const ItemDetail = () => {
 
@@ -36,7 +38,7 @@ const ItemDetail = () => {
                 dispatch({ type: 'REQUEST_FETCHING' });
 
                 const res = await axios.get(
-                    `https://empress-api.onrender.com/server/items/item/` + itemId
+                    `${baseUrl}/server/items/item/` + itemId
                 );
                 
                 dispatch({
@@ -67,7 +69,7 @@ const ItemDetail = () => {
             const existingItem = cart.cartItems.find((x) => x._id === item._id);
             const quantity = existingItem ? existingItem.quantity + 1 : 1; 
             const { data } = await axios.get(
-                `https://empress-api.onrender.com/server/items/item/${item._id}`
+                `${baseUrl}/server/items/item/${item._id}`
             );
 
             if (data.inStock < quantity) {
@@ -97,10 +99,8 @@ const ItemDetail = () => {
         try {
             dispatch({ type: "REQUEST_REVIEW" });
 
-            const accessToken = localStorage.getItem("accessToken");
-
             const { data } = await axios.post(
-                `https://empress-api.onrender.com/server/items/${item._id}/reviews`, 
+                `${baseUrl}/server/items/${item._id}/reviews`, 
                 { rating, comment, username: userInfo.user.username }, 
                 { headers: { authorization: `Bearer ${accessToken}}` } }
             );

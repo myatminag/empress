@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { Context } from 'context/user-context'; 
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const Stripe = ({ orderItems }) => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const params = useParams();
     const { id: orderId } = params;
@@ -17,7 +17,7 @@ const Stripe = ({ orderItems }) => {
     const paymentHandler = async () => {
         try {
             const res = await axios.post(
-                `https://empress-api.onrender.com/server/payment/create-checkout-session/${orderId}`, {
+                `${baseUrl}/server/payment/create-checkout-session/${orderId}`, {
                     orderItems,
                     userId: userInfo._id,
                     headers: { authorization: `Bearer ${accessToken}` }

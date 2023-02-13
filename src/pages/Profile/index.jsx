@@ -10,10 +10,10 @@ import { Context } from 'context/user-context';
 import { updateProfileReducer } from 'pages/Profile/reducer';
 import { UpdateSchema } from 'validations';
 import { WebTitle, ErrorField, SubTitle } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const Profile = () => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -30,7 +30,7 @@ const Profile = () => {
             dispatch({ type: "REQUEST_UPDATE_PROFILE" });
 
             const { data } = await axios.put(
-                'https://empress-api.onrender.com/server/user/profile', values, {
+                `${baseUrl}/server/user/profile`, values, {
                     headers: { authorization: `Bearer ${accessToken}` }
                 }
             );

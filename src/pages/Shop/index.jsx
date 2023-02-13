@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import { ItemSearchReducer } from 'pages/Shop/reducer';
 import { prices } from 'utils/data';
+import { baseUrl } from 'utils/baseUrl';
 import { Card, Loading, WebTitle } from 'components';
 
 const Shop = () => {
@@ -51,7 +52,7 @@ const Shop = () => {
                 dispatch({ type: "FETCH_SEARCH_ITEM" });
 
                 const { data } = await axios.get(
-                    `https://empress-api.onrender.com/server/items/shop?brand=${brand}&category=${category}&query=${query}&price=${price}&order=${order}&page=${page}`
+                    `${baseUrl}/server/items/shop?brand=${brand}&category=${category}&query=${query}&price=${price}&order=${order}&page=${page}`
                 );
 
                 dispatch({
@@ -78,7 +79,7 @@ const Shop = () => {
         const fetchCategories = async () => {
             try {
                 const { data } = await axios.get(
-                    'https://empress-api.onrender.com/server/items/categories'
+                    `${baseUrl}/server/items/categories`
                 );
                 setCategories(data);
             } catch (error) {
@@ -95,7 +96,7 @@ const Shop = () => {
         const fetchBrands = async () => {
             try {
                 const { data } = await axios.get(
-                    'https://empress-api.onrender.com/server/items/brands'
+                    `${baseUrl}/server/items/brands`
                 );
                 setBrands(data);
             } catch (error) {

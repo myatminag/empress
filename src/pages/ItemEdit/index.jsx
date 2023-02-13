@@ -6,10 +6,10 @@ import axios from 'axios';
 
 import { itemEditReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, Loading, ErrorField } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const AdminItemEdit = (props) => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const AdminItemEdit = (props) => {
                 dispatch({ type: "REQUEST_ITEM_EDIT" });
 
                 const { data } = await axios.get(
-                    `https://empress-api.onrender.com/server/items/item/${itemId}`
+                    `${baseUrl}/server/items/item/${itemId}`
                 );
 
                 setName(data.name);
@@ -73,7 +73,7 @@ const AdminItemEdit = (props) => {
             dispatch({ type: "REQUEST_ITEM_UPDATE" });
 
             await axios.put(
-                `https://empress-api.onrender.com/server/items/item/${itemId}`, {
+                `${baseUrl}/server/items/item/${itemId}`, {
                     _id: itemId,
                     name, modelName, brand,
                     price, description, category, 
@@ -102,7 +102,7 @@ const AdminItemEdit = (props) => {
             dispatch({ type: "REQUEST_UPLOAD" });
 
             const { data } = await axios.post(
-                'http://localhost:4000/server/upload', formData, { 
+                `${baseUrl}/server/upload`, formData, { 
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         authorization: `Bearer ${accessToken}`,

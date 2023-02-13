@@ -6,10 +6,10 @@ import axios from 'axios';
 
 import { uploadItemReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, ErrorField } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const NewItem = () => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const navigate = useNavigate();
      
@@ -40,7 +40,7 @@ const NewItem = () => {
             dispatch({ type: "REQUEST_CREATE_ITEM" });
 
             await axios.post(
-                'https://empress-api.onrender.com/server/items/create', itemData, { 
+                `${baseUrl}/server/items/create`, itemData, { 
                     headers: { authorization: `Bearer ${accessToken}` }
                 }
             );

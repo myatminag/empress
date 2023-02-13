@@ -8,10 +8,10 @@ import axios from 'axios';
 import { orderListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting} from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const AdminOrderList = () => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const AdminOrderList = () => {
                 dispatch({ type: "REQUEST_ORDER_LIST" });
 
                 const { data } = await axios.get(
-                    `https://empress-api.onrender.com/server/orders/admin?page=${page}`, {
+                    `${baseUrl}/server/orders/admin?page=${page}`, {
                         headers: { authorization: `Bearer ${accessToken}` }
                     }
                 );
@@ -65,7 +65,7 @@ const AdminOrderList = () => {
             dispatch({ type: "REQUEST_DELETE_ORDER" });
 
             await axios.delete(
-                `https://empress-api.onrender.com/server/orders/order/${order._id}`, {
+                `${baseUrl}/server/orders/order/${order._id}`, {
                     headers: { authorization: `Bearer ${accessToken}` }
                 }
             );

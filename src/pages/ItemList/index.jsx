@@ -7,10 +7,10 @@ import axios from 'axios';
 
 import { itemListReducer } from './reducer';
 import { WebTitle, SubTitle, Waiting } from 'components';
+import { baseUrl } from 'utils/baseUrl';
+import { accessToken } from 'utils/token';
 
 const AdminItemList = () => {
-
-    const accessToken = localStorage.getItem("accessToken");
 
     const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const AdminItemList = () => {
                 dispatch({ type: "REQUEST_ITEM_LIST" });
 
                 const { data } = await axios.get(
-                    `https://empress-api.onrender.com/server/items/admin?page=${page}`, {
+                    `${baseUrl}/server/items/admin?page=${page}`, {
                         headers: { authorization: `Bearer ${accessToken}` }
                     }
                 );
@@ -64,7 +64,7 @@ const AdminItemList = () => {
             dispatch({ type: "REQUEST_DELETE_ITEM" });
 
             await axios.delete(
-                `https://empress-api.onrender.com/server/items/item/${item._id}`, {
+                `${baseUrl}/server/items/item/${item._id}`, {
                     headers: { authorization: `Bearer ${accessToken}` }
                 }
             );
