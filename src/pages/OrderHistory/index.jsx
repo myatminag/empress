@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components'; 
-import API from './api';
+import useOrderHistory from './Hook';
 
 const OrderHistory = () => {
 
     const navigate = useNavigate();
 
-    const { isLoading, error, data } = API();
+    const { isLoading, error, data } = useOrderHistory();
 
     if (isLoading) return <Waiting />
     
