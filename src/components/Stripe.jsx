@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { Context } from 'context/user-context'; 
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const Stripe = ({ orderItems }) => {
 

@@ -1,21 +1,22 @@
-import axios from 'axios';
-import { useQuery } from 'react-query';
+import axios from "axios";
+import { useQuery } from "react-query";
 
-import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { baseUrl } from "utils/baseUrl";
+import { accessToken } from "utils/accessToken";
 
-const API = () => { 
-
-    const { isLoading, error, data } = useQuery('orderHistory', async () => {
-        const { data } = await axios.get(`${baseUrl}/server/orders/client`, {
-            headers: { authorization: `Bearer ${accessToken}` }
-        })
-        return data;
+const API = () => {
+  const { isLoading, error, data } = useQuery("orderHistory", async () => {
+    const { data } = await axios.get(`${baseUrl}/server/orders/client`, {
+      headers: { authorization: `Bearer ${accessToken}` },
     });
+    return data;
+  });
 
-    return {
-        isLoading, error, data
-    };
+  return {
+    isLoading,
+    error,
+    data,
+  };
 };
 
 export default API;

@@ -11,7 +11,7 @@ import { updateProfileReducer } from 'pages/Profile/reducer';
 import { UpdateSchema } from 'validations';
 import { WebTitle, ErrorField, SubTitle } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const Profile = () => {
 

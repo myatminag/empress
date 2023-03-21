@@ -8,7 +8,7 @@ import axios from 'axios';
 import { itemListReducer } from './reducer';
 import { WebTitle, SubTitle, Waiting } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const AdminItemList = () => {
 

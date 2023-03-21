@@ -6,7 +6,7 @@ import { orderReducer } from './reducer';
 import { Context } from 'context/user-context';
 import { WebTitle, SubTitle } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const Order = () => {
 

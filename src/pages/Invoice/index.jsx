@@ -11,7 +11,7 @@ import { Context } from 'context/user-context';
 import { invoiceReducer } from './reducer'; 
 import { Loading, Stripe, WebTitle } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const Invoice = () => {
 

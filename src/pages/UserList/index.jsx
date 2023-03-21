@@ -8,8 +8,8 @@ import axios from 'axios';
 import { userListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components';
-import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { BASE_URL } from 'constants/locationPathname';
+import { accessToken } from 'utils/accessToken';
 
 const AdminUserList = () => {
 
@@ -32,7 +32,7 @@ const AdminUserList = () => {
             try {
                 dispatch({ type: "REQUEST_USER_LIST" });
                 const { data } = await axios.get(
-                    `${baseUrl}/server/user/userslist?page=${page}`, {
+                    `${BASE_URL}/server/user/userslist?page=${page}`, {
                         headers: { authorization: `Bearer ${accessToken}` }
                     }
                 );

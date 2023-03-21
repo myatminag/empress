@@ -9,7 +9,7 @@ import { orderListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting} from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const AdminOrderList = () => {
 

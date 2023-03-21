@@ -7,7 +7,7 @@ import axios from 'axios';
 import { uploadItemReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, ErrorField } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const NewItem = () => {
 

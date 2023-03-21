@@ -9,7 +9,7 @@ import { Context } from 'context/user-context';
 import { itemDetailReducer } from './reducer';
 import { Rating, Loading, WebTitle, Description } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/token';
+import { accessToken } from 'utils/accessToken';
 
 const ItemDetail = () => {
 
