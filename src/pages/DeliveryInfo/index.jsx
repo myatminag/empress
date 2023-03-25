@@ -1,47 +1,18 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-import { Context } from 'context/user-context';
 import { WebTitle, SubTitle } from 'components';
+import useDeliveryInfo from './hook';
 
 const Delivery = () => {
 
-    const navigate = useNavigate(); 
-
-    /** Deliver Context */
-    const { state, dispatch: addressDispatch } = useContext(Context);
-    const { userInfo, cart : { deliveryAddress } } = state;
-
-    const [fullName, setFullName] = useState(deliveryAddress.fullName || "");
-    const [phone, setPhone] = useState(deliveryAddress.phone || '');
-    const [addressState, setaddressState] = useState(deliveryAddress.addressState || "");
-    const [city, setCity] = useState(deliveryAddress.city || "");
-    const [address, setAddress] = useState(deliveryAddress.address || "");
-
-    /** Delivery Form */
-    const deliveryFormHandler = (e) => {
-        e.preventDefault();
-
-        addressDispatch({
-            type: "SAVE_DELIVERY_ADDRESS",
-            payload: {
-                fullName, phone, addressState, city, address
-            }
-        });
-
-        localStorage.setItem('address', JSON.stringify({
-            fullName, phone, addressState, city, address
-        }));
-
-        navigate('/order');
-    };
-
-    /** If user login redirect to current page */
-    useEffect(() => {
-        if (!userInfo) {
-            navigate('login?redirect=/shipping');
-        }
-    }, [userInfo, navigate])
+    const {
+        fullName, setFullName,
+        phone, setPhone,
+        addressState, setaddressState,
+        city, setCity,
+        address, setAddress,
+        deliveryFormHandler
+    } = useDeliveryInfo();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -116,12 +87,14 @@ const Delivery = () => {
                             required
                             placeholder="Please enter your address"
                             onChange={(e) => setAddress(e.target.value)}
-                            className="w-[100%] h-[150px] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="w-[100%] h-[150px] px-4 py-2 rounded-md border text-sm placeholder:text-sm 
+                                focus:outline-none"
                         />
                     </div>
                     <button 
                         type="submit"
-                        className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                        className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border 
+                        rounded-[0.375rem] border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
                     >
                         Continue
                     </button>
