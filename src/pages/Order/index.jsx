@@ -6,7 +6,7 @@ import { orderReducer } from './reducer';
 import { Context } from 'context/user-context';
 import { WebTitle, SubTitle } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/accessToken';
+import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const Order = () => {
 
@@ -48,7 +48,7 @@ const Order = () => {
         try {
             const { data } = await axios.post(
                 `${baseUrl}/server/orders/new/`, orderData, {
-                    headers: { authorization: `Bearer ${accessToken}` }
+                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                 }
             );
 

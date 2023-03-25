@@ -11,7 +11,7 @@ import { Context } from 'context/user-context';
 import { invoiceReducer } from './reducer'; 
 import { Loading, Stripe, WebTitle } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/accessToken';
+import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const Invoice = () => {
 
@@ -54,7 +54,7 @@ const Invoice = () => {
 
                 const { data } = await axios.put(
                     `${baseUrl}/server/orders/${orderId}/pay`, details, {
-                        headers: { authorization: `Bearer ${accessToken}` }
+                        headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                     }
                 );
 
@@ -89,7 +89,7 @@ const Invoice = () => {
 
                 const { data } = await axios.get(
                     `${baseUrl}/server/orders/${orderId}`, {
-                        headers: { authorization: `Bearer ${accessToken}` }
+                        headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                     }
                 );
 
@@ -125,7 +125,7 @@ const Invoice = () => {
             const loadingPaypal = async () => {
                 const { data: clientId } = await axios.get(
                     `${baseUrl}/server/keys/paypal`, {
-                        headers: { authorization: `Bearer ${accessToken}` }
+                        headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                     }
                 );
  
@@ -153,7 +153,7 @@ const Invoice = () => {
 
             const { data } = await axios.put(
                 `${baseUrl}/server/orders/${order._id}/delivery`, {} , {
-                    headers: { authorization: `Bearer ${accessToken}` }
+                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                 }
             );
 

@@ -9,7 +9,7 @@ import { orderListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting} from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/accessToken';
+import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const AdminOrderList = () => {
 
@@ -34,7 +34,7 @@ const AdminOrderList = () => {
 
                 const { data } = await axios.get(
                     `${baseUrl}/server/orders/admin?page=${page}`, {
-                        headers: { authorization: `Bearer ${accessToken}` }
+                        headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                     }
                 );
 
@@ -57,7 +57,7 @@ const AdminOrderList = () => {
         } else {
             fetchOrderList();
         }
-    }, [accessToken, page, successDelete, navigate]);
+    }, [page, successDelete, navigate]);
 
     // delete order
     const deleteOrderHandler = async (order) => {
@@ -66,7 +66,7 @@ const AdminOrderList = () => {
 
             await axios.delete(
                 `${baseUrl}/server/orders/order/${order._id}`, {
-                    headers: { authorization: `Bearer ${accessToken}` }
+                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                 }
             );
 

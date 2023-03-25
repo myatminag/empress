@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { Context } from 'context/user-context'; 
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/accessToken';
+import { GET_ACCESS_TOKEN } from 'utils/accessToken';
 
 const Stripe = ({ orderItems }) => {
 
@@ -20,7 +20,7 @@ const Stripe = ({ orderItems }) => {
                 `${baseUrl}/server/payment/create-checkout-session/${orderId}`, {
                     orderItems,
                     userId: userInfo._id,
-                    headers: { authorization: `Bearer ${accessToken}` }
+                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                 }
             );
             localStorage.removeItem('cart');

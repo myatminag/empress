@@ -8,7 +8,7 @@ import axios from 'axios';
 import { itemListReducer } from './reducer';
 import { WebTitle, SubTitle, Waiting } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { accessToken } from 'utils/accessToken';
+import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const AdminItemList = () => {
 
@@ -33,7 +33,7 @@ const AdminItemList = () => {
 
                 const { data } = await axios.get(
                     `${baseUrl}/server/items/admin?page=${page}`, {
-                        headers: { authorization: `Bearer ${accessToken}` }
+                        headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                     }
                 );
 
@@ -56,7 +56,7 @@ const AdminItemList = () => {
         } else {
             fetchItemList();
         }
-    }, [page, successDelete, navigate, accessToken]);
+    }, [page, successDelete, navigate]);
 
     /** Delete Item */
     const deleteItemHandler = async (item) => {
@@ -65,7 +65,7 @@ const AdminItemList = () => {
 
             await axios.delete(
                 `${baseUrl}/server/items/item/${item._id}`, {
-                    headers: { authorization: `Bearer ${accessToken}` }
+                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
                 }
             );
 
