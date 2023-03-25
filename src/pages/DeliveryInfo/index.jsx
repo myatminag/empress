@@ -31,7 +31,7 @@ const Delivery = () => {
                             required
                             placeholder="Please enter your full name"
                             onChange={(e) => setFullName(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4">
@@ -45,7 +45,7 @@ const Delivery = () => {
                             required
                             placeholder="Please enter phone number"
                             onChange={(e) => setPhone(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4">
@@ -59,7 +59,7 @@ const Delivery = () => {
                             required
                             placeholder="Please enter your state"
                             onChange={(e) => setaddressState(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4">
@@ -73,7 +73,7 @@ const Delivery = () => {
                             required
                             placeholder="Please enter your city"
                             onChange={(e) => setCity(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-8">
@@ -87,14 +87,12 @@ const Delivery = () => {
                             required
                             placeholder="Please enter your address"
                             onChange={(e) => setAddress(e.target.value)}
-                            className="w-[100%] h-[150px] px-4 py-2 rounded-md border text-sm placeholder:text-sm 
-                                focus:outline-none"
+                            className="textarea-form"
                         />
                     </div>
                     <button 
                         type="submit"
-                        className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border 
-                        rounded-[0.375rem] border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                        className="default-btn"
                     >
                         Continue
                     </button>
