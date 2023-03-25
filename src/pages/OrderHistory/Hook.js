@@ -7,7 +7,7 @@ import { GET_ACCESS_TOKEN } from "utils/accessToken";
 const useOrderHistory = () => {
     const { isLoading, error, data } = useQuery("orderHistory", async () => {
         const { data } = await axios.get(`${baseUrl}/server/orders/client`, {
-            headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` },
+            headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` },
         });
         return data;
     });
