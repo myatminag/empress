@@ -1,21 +1,11 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-import { Context } from 'context/user-context';
 import { CartItem, Empty, SubTitle } from 'components';
+import useCart from './hook';
 
 const Cart = () => {
 
-    const navigate = useNavigate();
-
-    // get cart items from cart
-    const { state } = useContext(Context);
-    const { cart: { cartItems } } = state;
-
-    // checkout
-    const orderHandler = () => {
-        navigate('/login?redirect=/delivery')
-    };
+    const { cartItems, orderHandler } = useCart();
 
     return (
         <div className="w-[100%] px-3 py-6">
@@ -54,7 +44,8 @@ const Cart = () => {
                             <button 
                                 onClick={orderHandler}
                                 disabled={cartItems.length === 0}
-                                className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                                className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border 
+                                border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
                             >
                                 Order
                             </button>
