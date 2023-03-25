@@ -17,13 +17,9 @@ const Card = ({ items }) => {
         try {
             const existingItem = cartItems.find((x) => x._id === items._id);
             const quantity = existingItem ? existingItem.quantity + 1 : 1; 
-            const { data } = await axios.get(
+            await axios.get(
                 `${baseUrl}/server/items/item/${item._id}`
-            )
-
-            if (data.inStock < quantity) {
-                window.alert('Out of Stock')
-            };
+            );
 
             cartDispatch({
                 type: "ADD_TO_CART",
