@@ -2,13 +2,13 @@ import React from 'react';
 
 import { WebTitle, SubTitle, Summary, DataChart, Waiting } from 'components';
 import { useNavigate } from 'react-router-dom';
-import API from './api';
+import useDashboard from './hook';
 
 const Dashboard = () => { 
 
     const navigate = useNavigate();
 
-    const{ isLoading, error, data } = API();
+    const{ isLoading, error, data } = useDashboard();
 
     if (isLoading) return <Waiting />
     
