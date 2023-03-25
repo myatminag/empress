@@ -15,7 +15,7 @@ export { default as Editor } from './Editor';
 export { default as Description } from './Description';
 export { default as Card } from './Card';
 export { default as Brand } from './Brand';
-export { default as Ads } from './Ads';
+export { default as AdsSwiper } from './AdsSwiper';
 export { default as Summary } from './Summary';
 export { default as DataChart } from './DataChart';
 export { default as Empty } from './Empty';

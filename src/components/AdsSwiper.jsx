@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 import { ads } from 'utils/data';
 
-const Ads = () => {
+const AdsSwiper = () => {
     return (
         <div> 
             <Swiper
@@ -56,4 +56,4 @@ const Ads = () => {
     )
 };
 
-export default Ads;
+export default AdsSwiper;

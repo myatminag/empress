@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import API from './api';
-import { WebTitle, Card, Ads, Brand, Featured, Waiting } from 'components';
+import { WebTitle, Card, AdsSwiper, Brand, Featured, Waiting } from 'components';
 
 const Item = () => {
     
@@ -17,7 +17,7 @@ const Item = () => {
     return (
         <section className="">  
             <WebTitle title={"Home"} />
-            <Ads />
+            <AdsSwiper />
             <Featured />
             <div className="px-3 py-6 mb-8 lg:px-[8%]">
                 <p className="mb-3 text-center text-xl lg:text-3xl">
