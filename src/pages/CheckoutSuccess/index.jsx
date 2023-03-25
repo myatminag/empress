@@ -19,7 +19,9 @@ const CheckoutSuceess = () => {
                 We'll email you order confirmation with details and delivery info.
             </p>
             <Link to="/shop">
-                <button className="mb-4 px-4 py-2 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200">
+                <button className="mb-4 px-4 py-2 text-sm text-white tracking-wider bg-primaryDark border 
+                    border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                >
                     Continue Shopping
                 </button>
             </Link>
