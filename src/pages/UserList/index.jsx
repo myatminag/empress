@@ -8,7 +8,7 @@ import axios from 'axios';
 import { userListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components';
-import { BASE_URL } from 'constants/locationPathname';
+import { BASE_URL } from 'constants/baseURL';
 
 const AdminUserList = () => {
 
@@ -64,7 +64,7 @@ const AdminUserList = () => {
             dispatch({ type: "REQUEST_DELETE_USER" });
 
             await axios.delete(
-                `https://empress-api.onrender.com/server/user/userslist/${user._id}`, {
+                `${BASE_URL}/server/user/userslist/${user._id}`, {
                     headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
@@ -89,7 +89,7 @@ const AdminUserList = () => {
                 navigate('*')
             ) : (
                 <div>
-                    {usersList.length === 0 ? (
+                    {!usersList ? (
                         <div className="flex flex-col items-center">
                             <div className="w-[350px]">
                                 <AnimationLottie />
