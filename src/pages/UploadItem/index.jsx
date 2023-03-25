@@ -7,7 +7,6 @@ import axios from 'axios';
 import { uploadItemReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, ErrorField } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const NewItem = () => {
 
@@ -41,7 +40,7 @@ const NewItem = () => {
 
             await axios.post(
                 `${baseUrl}/server/items/create`, itemData, { 
-                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
+                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
 
@@ -67,7 +66,7 @@ const NewItem = () => {
                 'https://empress-api.onrender.com/server/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        authorization: `Bearer ${GET_ACCESS_TOKEN}`,
+                        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                     }
                 }
             );

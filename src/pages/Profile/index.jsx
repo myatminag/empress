@@ -11,7 +11,6 @@ import { updateProfileReducer } from 'pages/Profile/reducer';
 import { UpdateSchema } from 'validations';
 import { WebTitle, ErrorField, SubTitle } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const Profile = () => {
 
@@ -31,7 +30,7 @@ const Profile = () => {
 
             const { data } = await axios.put(
                 `${baseUrl}/server/user/profile`, values, {
-                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
+                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
 

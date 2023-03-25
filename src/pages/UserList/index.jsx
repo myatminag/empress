@@ -9,7 +9,6 @@ import { userListReducer } from './reducer';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components';
 import { BASE_URL } from 'constants/locationPathname';
-import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const AdminUserList = () => {
 
@@ -33,7 +32,7 @@ const AdminUserList = () => {
                 dispatch({ type: "REQUEST_USER_LIST" });
                 const { data } = await axios.get(
                     `${BASE_URL}/server/user/userslist?page=${page}`, {
-                        headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
+                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
 
@@ -66,7 +65,7 @@ const AdminUserList = () => {
 
             await axios.delete(
                 `https://empress-api.onrender.com/server/user/userslist/${user._id}`, {
-                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
+                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
 

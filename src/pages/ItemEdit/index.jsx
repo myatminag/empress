@@ -7,7 +7,6 @@ import axios from 'axios';
 import { itemEditReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, Loading, ErrorField } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { GET_ACCESS_TOKEN } from "utils/accessToken";
 
 const AdminItemEdit = (props) => {
 
@@ -79,7 +78,7 @@ const AdminItemEdit = (props) => {
                     price, description, category, 
                     image, images, inStock
                 }, {
-                    headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}` }
+                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
 
@@ -105,7 +104,7 @@ const AdminItemEdit = (props) => {
                 `${baseUrl}/server/upload`, formData, { 
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        authorization: `Bearer ${GET_ACCESS_TOKEN}`,
+                        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                     }
                 }
             );

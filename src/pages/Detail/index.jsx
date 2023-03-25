@@ -9,7 +9,6 @@ import { Context } from 'context/user-context';
 import { itemDetailReducer } from './reducer';
 import { Rating, Loading, WebTitle, Description } from 'components';
 import { baseUrl } from 'utils/baseUrl';
-import { GET_ACCESS_TOKEN } from 'utils/accessToken';
 
 const ItemDetail = () => {
 
@@ -102,7 +101,7 @@ const ItemDetail = () => {
             const { data } = await axios.post(
                 `${baseUrl}/server/items/${item._id}/reviews`, 
                 { rating, comment, username: userInfo.user.username }, 
-                { headers: { authorization: `Bearer ${GET_ACCESS_TOKEN}}` } }
+                { headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}}` } }
             );
 
             console.log(data);
