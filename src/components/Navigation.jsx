@@ -40,8 +40,6 @@ const Navigation = () => {
     const clientNavLink = [
         { id: '1', url: '/profile', text: 'Account Info', size: 21, icon: FiSettings },
         { id: '2', url: '/orderhistory', text: 'Orders History', size: 21, icon: MdOutlineHistory },
-        { id: '3', url: '/about', text: 'About Us', size: 21, icon: FcAbout },
-        { id: '4', url: '/services', text: 'Services', size: 21, icon: AiTwotoneCustomerService },
     ];
 
     return (
