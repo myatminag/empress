@@ -25,7 +25,8 @@ const AdsSwiper = () => {
                     <SwiperSlide>
                         <div className="w-screen h-[20vh] lg:h-[70vh] mb-5 lg:mb-0">
                             <div className="max-w-[1240px] w-full h-full mx-auto px-3 lg:px-0 flex items-center justify-center 
-                            lg:gap-x-6">
+                                lg:gap-x-6"
+                            >
                                 <div>
                                     <p className="mb-2 text-xs lg:text-base lg:mb-5">
                                         {data.title}
@@ -37,10 +38,7 @@ const AdsSwiper = () => {
                                     >
                                         {data.text}
                                     </motion.p>
-                                    <button className="px-4 py-2 lg:py-3 lg:w-[160px] text-white text-sm uppercase 
-                                        bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white 
-                                        transition duration-200"
-                                    >
+                                    <button className="swiper-btn">
                                         Shop Now
                                     </button>
                                 </div>
