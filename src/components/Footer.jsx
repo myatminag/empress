@@ -1,30 +1,32 @@
 import React from 'react';
-import { MdOutlineEmail, MdOutlinePhone, MdOutlineLocationOn } from 'react-icons/md';
-import { FaTwitter, FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa'; 
+
+import EmailIcon from './icons/EmailIcon';
+import PhoneIcon from './icons/PhoneIcon';
+import LocationIcon from './icons/LocationIcon';
 
 const Footer = () => {
     return (
         <section className="px-3 pt-12 pb-5 lg:px-6 bg-primaryDark"> 
-            <div className="mb-10 lg:flex lg:items-start lg:justify-between">
+            <div className="mb-10 lg:flex lg:items-start lg:justify-evenly">
                 <div className="mb-8 lg:col-span-1">
                     <header className="text-white text-4xl font-semibold mb-4">
                         Empress
                     </header>
                     <ul className="">
-                        <li className="flex items-center gap-x-1 mb-3 text-[#adb5bd] hover:text-white transition-all duration-150 cursor-pointer">
-                            <MdOutlineEmail size={20} />
+                        <li className="footer-shop-info">
+                            <EmailIcon />
                             <p className="">
                                 empress@gmail.com
                             </p>
                         </li>
-                        <li className="flex items-center gap-x-1 mb-3 text-[#adb5bd] hover:text-white transition-all duration-150 cursor-pointer">
-                            <MdOutlinePhone size={20} />
+                        <li className="footer-shop-info">
+                            <PhoneIcon />
                             <p className="">
                                 +95-9123-456-789
                             </p>
                         </li>
-                        <li className="flex items-center gap-x-1 mb-3 text-[#adb5bd] hover:text-white transition-all duration-150 cursor-pointer">
-                            <MdOutlineLocationOn size={20} />
+                        <li className="footer-shop-info">
+                            <LocationIcon />
                             <p className="">
                                 Yangon, Myanmar
                             </p>
@@ -36,36 +38,17 @@ const Footer = () => {
                         Social Media
                     </header>
                     <ul className="">
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Facebook
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Instagram
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Youtube
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Pinterest
-                        </li>
-                    </ul>
-                </div>
-                <div className="mb-8 lg:col-span-1">
-                    <header className="text-white text-xl mb-2">
-                        My Account
-                    </header>
-                    <ul className="">
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
-                            Refund policy
-                        </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
-                            Login
-                        </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
-                            Order status
-                        </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
-                            Site map
                         </li>
                     </ul>
                 </div>
@@ -74,19 +57,19 @@ const Footer = () => {
                         Information
                     </header>
                     <ul className="">
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Terms & Conditions
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Contact Us
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             About Us
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             FAQ
                         </li>
-                        <li className="text-[#adb5bd] mb-3 hover:text-white transition-all duration-150 cursor-pointer">
+                        <li className="footer-text">
                             Customer Services
                         </li>
                     </ul>
@@ -102,15 +85,12 @@ const Footer = () => {
                         <input 
                             type="email" 
                             placeholder="Your email address"
-                            className="w-[100%] bg-[#2f313a] text-white rounded-md py-3 px-3 text-sm focus:outline-none"
+                            className="w-[100%] bg-[#2f313a] text-white rounded-md p-3 text-sm focus:outline-none"
                         />
                     </div>
-                    <div className="flex items-center gap-x-2">
-                        <FaTwitter size={45} className="bg-[#2f313a] text-white px-1 py-3 rounded-[50px] cursor-pointer" />
-                        <FaFacebook size={45} className="bg-[#2f313a] text-white px-1 py-3 rounded-[50px] cursor-pointer" />
-                        <FaInstagram size={45} className="bg-[#2f313a] text-white px-1 py-3 rounded-[50px] cursor-pointer" />
-                        <FaYoutube size={45} className="bg-[#2f313a] text-white px-1 py-3 rounded-[50px] cursor-pointer" />
-                    </div>
+                    <button className="bg-[#2f313a] text-white p-3 rounded-md text-sm">
+                        Subscribe
+                    </button>
                 </div>
             </div>
             <p className="text-center text-sm text-[#adb5bd]">

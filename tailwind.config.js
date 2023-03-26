@@ -12,7 +12,8 @@ module.exports = {
         error: "#d90429",
         green: "#57cc99",
         blue: "#0066ff",
-        rating: "#FF9529"
+        rating: "#FF9529",
+        footerText: "#adb5bd"
       },
     },
   },
