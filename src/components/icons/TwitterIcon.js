@@ -4,10 +4,11 @@ const TwitterIcon = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
+            width="24"
+            height="24"
             fill="none"
             viewBox="0 0 33 33"
+            style={{ cursor: "pointer" }}
         >
             <path
                 fill="#00AAEC"

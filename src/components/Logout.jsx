@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiLogOut } from 'react-icons/fi';
+import LogoutIcon from './icons/LogoutIcon';
 
 import { Context } from 'context/user-context'; 
 
@@ -10,7 +10,7 @@ const Logout = () => {
 
     const { dispatch: authDispatch } = useContext(Context);
 
-    // logout
+    // logout and remove all related localstorage
     const logoutHandler = () => { 
         authDispatch({
             type: "LOGOUT"
@@ -28,7 +28,7 @@ const Logout = () => {
             onClick={logoutHandler}
             className="border-t flex items-center gap-x-3 px-6 py-3 cursor-pointer"
         >
-            <FiLogOut size={18} />
+            <LogoutIcon />
             <p className="font-light">
                 Logout
             </p>

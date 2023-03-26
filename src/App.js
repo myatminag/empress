@@ -13,8 +13,8 @@ import PreLoader from "components/PreLoader";
 
 const NotFound = lazy(() => import("pages/NotFound"));
 const Home = lazy(() => import("pages/Home"));
-const About = lazy(() => import("pages/About"));
-const Services = lazy(() => import("pages/Services"));
+// const About = lazy(() => import("pages/About"));
+// const Services = lazy(() => import("pages/Services"));
 const Login = lazy(() => import("pages/Login"));
 const Signup = lazy(() => import("pages/Register"));
 const ForgotPassword = lazy(() => import("pages/ForgotPassword"));
@@ -79,8 +79,8 @@ const App = () => {
                         <Routes>
                             <Route path='*' element={<NotFound />} />
                             <Route path="/" element={<Home />} />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/services" element={<Services />} />
+                            {/* <Route path="/about" element={<About />} />
+                            <Route path="/services" element={<Services />} /> */}
                             <Route path="/login" element={<Login />} />
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/forgetpassword" element={<ForgotPassword />} />
