@@ -34,7 +34,7 @@ const Stripe = ({ orderItems }) => {
     return (
         <button 
             onClick={paymentHandler} 
-            className="w-[100%] px-4 py-2 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+            className="default-btn"
         >
             Check Out
         </button>
