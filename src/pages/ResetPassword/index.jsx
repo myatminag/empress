@@ -1,42 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { BiShow, BiHide } from 'react-icons/bi';
-import { useFormik } from 'formik';
-import axios from 'axios';
+import React from 'react';
 
-import { PasswordSchema } from 'validations/index';
+import PwShowIcon from 'components/icons/PwShowIcon';
+import PwHideIcon from 'components/icons/PwHideIcon';
 import { WebTitle, SubTitle, ErrorField } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import useResetPassword from './hook';
 
 const ResetPassword = () => {
 
-    const navigate = useNavigate();
-    
-    const { resetToken } = useParams();
-
-    const [showPassword, setShowPassword] = useState(false);
-    const [showCPassword, setShowCPassword] = useState(false);
-
-    const onSubmit = async (values) => {
-        try {
-            await axios.put(
-                `${baseUrl}/server/auth/reset-password/${resetToken}`, values
-            );
-            
-            navigate('/');
-        } catch (error) {
-            navigate("*");
-        }
-    };
-
-    const { values, handleSubmit, handleChange, touched, errors, isSubmitting } = useFormik({
-        initialValues: {
-            email: '',
-        },
-        validateOnBlur: true,
-        onSubmit,
-        validationSchema: PasswordSchema
-    });
+    const {
+        showPassword, setShowPassword,
+        showCPassword, setShowCPassword,
+        values,
+        handleSubmit,
+        handleChange,
+        touched,
+        errors,
+        isSubmitting
+    } = useResetPassword();
 
     return (
         <section className="px-3 py-6 lg:px-6 mb-10 md:mb-0 md:px-[15%] 2xl:px-[20%]">
@@ -59,9 +39,9 @@ const ResetPassword = () => {
                         />
                         <div onClick={() => setShowPassword(!showPassword)} className="cursor-pointer">
                             {!showPassword ? (
-                                <BiHide size={23} color="#0F2027" />
+                                <PwHideIcon />
                             ) : (
-                                <BiShow size={23} color="#0F2027" />
+                                <PwShowIcon />
                             )}
                         </div>
                     </div>
@@ -82,9 +62,9 @@ const ResetPassword = () => {
                         />
                         <div onClick={() => setShowCPassword(!showCPassword)} className="cursor-pointer">
                             {!showCPassword ? (
-                                <BiHide size={23} color="#0F2027" />
+                                <PwHideIcon />
                             ) : (
-                                <BiShow size={23} color="#0F2027" />
+                                <PwShowIcon />
                             )}
                         </div>
                     </div>
@@ -92,7 +72,7 @@ const ResetPassword = () => {
                 <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                    className="default-btn"
                 >
                     Confirm
                 </button>
