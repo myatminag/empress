@@ -1,116 +1,40 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import axios from 'axios';
 
-import { ItemSearchReducer } from 'pages/Shop/reducer';
+import useShop from './hook';
 import { prices } from 'utils/data';
-import { baseUrl } from 'utils/baseUrl';
 import { Card, Loading, WebTitle } from 'components';
 
 const Shop = () => {
 
-    const navigate = useNavigate(); 
-
-    // search?category=laptops
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-
-    const category = searchParams.get('category') || 'all';
-    const query = searchParams.get('query') || 'all';
-    const price = searchParams.get('price') || 'all';
-    const order = searchParams.get('order') || 'newest';
-    const page  = searchParams.get('page') || 1;
-    const brand = searchParams.get('brand') || 'all';
-
-    // filtering URL
-    const filteringURL = (filter) => {
-        const filterPage = filter.page || page;
-        const filterBrand = filter.brand || brand;
-        const filterCategory = filter.category || category;
-        const filterQuery = filter.query || query;
-        const filterPrice = filter.price || price;
-        const sortOrder = filter.order || order;
-
-        return `/shop?brand=${filterBrand}&category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&order=${sortOrder}&page=${filterPage}`;
-    };
-
-    // fetch items from api
-    const [{ loading, error, items, pages, countItems }, dispatch] = useReducer(ItemSearchReducer, {
-        loading: true,
-        error: ''
-    });
-
-    useEffect(() => {
-        const fetchSearchItem = async () => {
-            try {
-                dispatch({ type: "FETCH_SEARCH_ITEM" });
-
-                const { data } = await axios.get(
-                    `${baseUrl}/server/items/shop?brand=${brand}&category=${category}&query=${query}&price=${price}&order=${order}&page=${page}`
-                );
-
-                dispatch({
-                    type: "SUCCESS_SEARCH_ITEM", 
-                    payload: data
-                })
-            } catch (error) {
-                dispatch({
-                    type: "FAIL_SEARCH_ITEM",
-                    payload: error.res && error.res.data.message 
-                        ? error.res.data.message 
-                        : error.message
-                });
-                navigate('*');
-            }
-        };
-        fetchSearchItem();
-    }, [query, price, brand, category, page, order, error, navigate]);
-
-    // fetch categories from api
-    const [categories, setCategories] = useState([]); 
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const { data } = await axios.get(
-                    `${baseUrl}/server/items/categories`
-                );
-                setCategories(data);
-            } catch (error) {
-                navigate('*');
-            }
-        };
-        fetchCategories();
-    }, [navigate]);
-
-    // fetch brands
-    const [brands, setBrands] = useState([]);
-
-    useEffect(() => {
-        const fetchBrands = async () => {
-            try {
-                const { data } = await axios.get(
-                    `${baseUrl}/server/items/brands`
-                );
-                setBrands(data);
-            } catch (error) {
-                navigate('*');
-            }
-        };
-        fetchBrands();
-    }, [navigate]);
+    const {
+        navigate,
+        filteringURL,
+        loading,
+        error,
+        items,
+        pages,
+        page,
+        countItems,
+        category, categories,
+        query,
+        brand, brands,
+        price,
+        order
+    } = useShop();
 
     return (
         <section className="px-3 py-6 lg:px-6 lg:mb-16 lg:grid lg:grid-cols-5 lg:gap-x-3">
             <WebTitle title={"Shop"} />
             <div className="lg:col-span-1">
                 <div className="border rounded-md px-3 py-4 mb-4">
+                    {/* ----- brands ----- */}
                     <Accordion sx={{ boxShadow: 'none' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -149,6 +73,7 @@ const Shop = () => {
                             ))}
                         </AccordionDetails>
                     </Accordion>
+                    {/* ----- categories ----- */}
                     <Accordion sx={{ boxShadow: 'none' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -187,6 +112,7 @@ const Shop = () => {
                             ))}
                         </AccordionDetails>
                     </Accordion>
+                    {/* ----- price ----- */}
                     <Accordion sx={{ boxShadow: 'none' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -228,9 +154,14 @@ const Shop = () => {
                 </div>
             </div>
             <div className="w-[100%] lg:col-span-4">
-                <div className="mb-5 lg:mb-3 lg:px-4 lg:py-2 lg:bg-white lg:rounded-md lg:border lg:flex lg:justify-between lg:items-center">
-                    <div className="px-3 py-4 mb-3 bg-white rounded-md shadow-CustomShadow flex items-center lg:p-0 lg:m-0 lg:bg-none lg:rounded-none lg:shadow-none">
-                        <p className="">
+                <div className="mb-5 lg:mb-3 lg:px-4 lg:py-2 lg:bg-white lg:rounded-md lg:border lg:flex lg:justify-between 
+                    lg:items-center"
+                >
+                    {/* ----- show results ----- */}
+                    <div className="px-3 py-4 mb-3 bg-white rounded-md shadow-CustomShadow flex items-center lg:p-0 lg:m-0 
+                        lg:bg-none lg:rounded-none lg:shadow-none"
+                    >
+                        <p>
                             Showing Results of {countItems === 0 ? 'No' : countItems}
                         </p>
                         {query !== 'all' && ' : ' + query}
@@ -248,7 +179,10 @@ const Shop = () => {
                             null
                         )}
                     </div>
-                    <div className="px-3 py-4 bg-white rounded-md shadow-CustomShadow lg:p-0 lg:bg-none lg:rounded-none lg:shadow-none lg:flex lg:items-center">
+                    {/* ----- sorting ----- */}
+                    <div className="px-3 py-4 bg-white rounded-md shadow-CustomShadow lg:p-0 lg:bg-none lg:rounded-none 
+                        lg:shadow-none lg:flex lg:items-center"
+                    >
                         <p className="text-center mb-1 lg:mb-0 lg:mr-3">
                             Sort by
                         </p>
@@ -279,6 +213,7 @@ const Shop = () => {
                         <div className="mb-5 grid grid-cols-2 lg:grid-cols-4 gap-3">
                             {items.map(item => <Card items={item} key={item._id} />)}
                         </div>
+                        {/* ----- pagination ----- */}
                         <div className="flex items-center gap-x-3">
                             {[...Array(pages).keys()].map((x) => (
                                 <Link 
@@ -286,7 +221,7 @@ const Shop = () => {
                                     to={filteringURL({ page: x + 1 })}
                                 >
                                     <button 
-                                        className={Number(page) === x + 1 ? "w-[30px] px-2 py-1 font-semibold rounded-md text-white bg-primaryDark" : "w-[30px] px-2 py-1 border border-primaryDark rounded-md"}
+                                        className={Number(page) === x + 1 ? "active-pagination-btn" : "pagination-btn"}
                                     >
                                         {x + 1}
                                     </button>
