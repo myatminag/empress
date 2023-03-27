@@ -34,6 +34,14 @@ body {
     border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200
 }
 
+.pagination-btn {
+    @apply w-[30px] px-2 py-1 rounded-md;
+}
+
+.active-pagination-btn {
+    @apply w-[30px] px-2 py-1 font-semibold rounded-md text-white bg-primaryDark;
+}
+
 /* ----- Footer ----- */
 .footer-shop-info {
     @apply flex items-center gap-x-2 mb-3 text-footerText hover:text-white transition-all duration-150 cursor-pointer;
@@ -41,6 +49,11 @@ body {
 
 .footer-text {
     @apply text-footerText mb-3 hover:text-white transition-all duration-150 cursor-pointer;
+}
+
+/* ----- Table ----- */
+.list-table {
+    @apply w-[900px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto;
 }
 
 /* ----- Scrollbar ----- */

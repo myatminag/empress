@@ -1,82 +1,25 @@
-import React, { useEffect, useReducer } from 'react'
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import React from 'react'
+import {  Link  } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaTrashAlt } from 'react-icons/fa';
-import axios from 'axios';
  
-import { userListReducer } from './reducer';
+import TrashIcon from 'components/icons/TrashIcon';
+import useUserList from './hook';
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components';
-import { BASE_URL } from 'constants/baseURL';
 
 const AdminUserList = () => {
 
-    const navigate = useNavigate();
-
-    // ?page=1
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-
-    const page = searchParams.get('page') || 1;
-
-    // fetch user list from api
-    const [{ loading, error, usersList, pages, loadingDelete, successDelete }, dispatch] = useReducer(userListReducer, {
-        loading: true,
-        error: ''
-    });
-
-    useEffect(() => {
-        const fetchUserList = async () => {
-            try {
-                dispatch({ type: "REQUEST_USER_LIST" });
-                const { data } = await axios.get(
-                    `${BASE_URL}/server/user/userslist?page=${page}`, {
-                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                    }
-                );
-
-                dispatch({ 
-                    type: "SUCCESS_USER_LIST", 
-                    payload: data
-                });
-            } catch (error) {
-                dispatch({ 
-                    type: "FAIL_USER_LIST",
-                    payload: error.res && error.res.data.message 
-                        ? error.res.data.message 
-                        : error.message
-                });
-                console.log(error); 
-            }
-        }
-
-        if (successDelete) {
-            dispatch({ type: "RESET_DELETE_USER" });
-        } else {
-            fetchUserList();
-        }
-    }, [successDelete, page, navigate]);
-
-   // delete user
-    const deleteUserHandler = async (user) => {
-        try {
-            dispatch({ type: "REQUEST_DELETE_USER" });
-
-            await axios.delete(
-                `${BASE_URL}/server/user/userslist/${user._id}`, {
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            dispatch({ type: "SUCCESS_DELETE_USER" });
-            toast.success('Success Delete');
-        } catch (error) {
-            dispatch({ type: "FAIL_DELETE_USER" });
-            console.log(error);
-            navigate('*');
-        }
-    };
+    const {
+        navigate,
+        loading,
+        error,
+        usersList,
+        pages,
+        page,
+        loadingDelete,
+        deleteUserHandler
+    } = useUserList();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -100,7 +43,8 @@ const AdminUserList = () => {
                         </div>
                     ) : (
                         <div className="overflow-x-scroll scrollbar-none lg:overflow-hidden">
-                            <table className="w-[900px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto">
+                            <table className="list-table"
+                            >
                                 <thead className="text-left">
                                     <tr className="border">
                                         <th className="px-4 py-2">
@@ -137,9 +81,9 @@ const AdminUserList = () => {
                                                     type="button"
                                                     disabled={user.idAdmin === true}
                                                     onClick={() => deleteUserHandler(user)}    
-                                                    className="px-3"
+                                                    className="px-3 pt-1"
                                                 >
-                                                    <FaTrashAlt size={17} color="#ef233c" />
+                                                    <TrashIcon />
                                                 </button>
                                             </td>
                                         </tr>
@@ -151,6 +95,7 @@ const AdminUserList = () => {
                                     Loading...
                                 </p>
                             )}
+                            {/* ----- pagination ----- */}
                             <div className="flex items-center gap-x-3">
                                 {[...Array(pages).keys()].map((x) => (
                                     <Link 
@@ -158,7 +103,7 @@ const AdminUserList = () => {
                                         to={`/userslist?page=${ x + 1 }`}
                                     >
                                         <button 
-                                            className={Number(page) === x + 1 ? "w-[30px] px-2 py-1 font-semibold rounded-md text-white bg-primaryDark" : "w-[30px] px-2 py-1 shadow-CustomShadow rounded-md"}
+                                            className={Number(page) === x + 1 ? "active-pagination-btn" : "pagination-btn"}
                                         >
                                             {x + 1}
                                         </button>
