@@ -1,92 +1,27 @@
-import React, { useReducer, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { FaTrashAlt } from 'react-icons/fa';
-import axios from 'axios';
+import React from 'react';
 
-import { uploadItemReducer } from './reducer';
+import TrashIcon from 'components/icons/TrashIcon';
+import useUploadItem from './hook';
 import { SubTitle, Editor, WebTitle, ErrorField } from 'components';
-import { baseUrl } from 'utils/baseUrl';
 
 const NewItem = () => {
 
-    const navigate = useNavigate();
-     
-    const [name, setName] = useState('');
-    const [modelName, setModelName] = useState('');
-    const [brand, setBrand] = useState('');
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
-    const [image, setImage] = useState('');
-    const [images, setImages] = useState([]);
-    const [inStock, setInStock] = useState('');
-
-    // post item to api
-    const [{ loadingCreate, loadingUpload }, dispatch] = useReducer(uploadItemReducer, {
-        loading: true,
-        error: ''
-    });
-
-    const uploadItemHandler = async (e) => {
-        e.preventDefault();
-        const itemData = {
-            name, modelName, brand, price,
-            description, category, image, images, inStock
-        }
-
-        try {
-            dispatch({ type: "REQUEST_CREATE_ITEM" });
-
-            await axios.post(
-                `${baseUrl}/server/items/create`, itemData, { 
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            toast.success('Success Upload');
-            dispatch({ type: "SUCCESS_CREATE_ITEM" }); 
-            navigate('/items-list');
-        } catch (error) {
-            dispatch({ type: "FAIL_CREATE_ITEM" });
-            console.log(error);
-            navigate('*');
-        }
-    };
-
-    const uploadImageHandler = async (e, multiImages) => { 
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        
-        try {
-            dispatch({ type: "REQUEST_UPLOAD" });
-
-            const { data } = await axios.post(
-                'https://empress-api.onrender.com/server/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                    }
-                }
-            );
-
-            dispatch({ type: "SUCCESS_UPLOAD" });
-            if (multiImages) {
-                setImages([...images, data.secure_url]);
-            } else {
-                setImage(data.secure_url);
-            };
-        } catch (error) {
-            dispatch({ type: "FAIL_UPLOAD" });
-            console.log(error);
-            navigate('*');
-        }
-    };
-
-    const deleteImageHandler = async (imageFile) => {
-        setImages(images.filter(image => image === imageFile))
-    };
+    const {
+        name, setName,
+        modelName, setModelName,
+        brand, setBrand,
+        price, setPrice,
+        description, setDescription,
+        category, setCategory,
+        image, setImage,
+        images,
+        inStock, setInStock,
+        loadingCreate,
+        loadingUpload,
+        uploadItemHandler,
+        uploadImageHandler,
+        deleteImageHandler
+    } = useUploadItem();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -104,7 +39,7 @@ const NewItem = () => {
                             value={name}
                             required
                             onChange={(e) => setName(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -117,7 +52,7 @@ const NewItem = () => {
                             value={modelName}
                             required
                             onChange={(e) => setModelName(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -130,7 +65,7 @@ const NewItem = () => {
                             value={brand}
                             required
                             onChange={(e) => setBrand(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -143,7 +78,7 @@ const NewItem = () => {
                             value={price}
                             required
                             onChange={(e) => setPrice(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -156,7 +91,7 @@ const NewItem = () => {
                             value={category}
                             required
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -169,7 +104,7 @@ const NewItem = () => {
                             value={image}
                             required
                             onChange={(e) => setImage(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -180,7 +115,7 @@ const NewItem = () => {
                             type="file" 
                             required
                             onChange={uploadImageHandler}
-                            // className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                         {loadingUpload && (
                             <p className="font-semibold text-sm text-center">
@@ -197,7 +132,7 @@ const NewItem = () => {
                             value={inStock}
                             required
                             onChange={(e) => setInStock(e.target.value)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4 lg:col-span-1">
@@ -209,7 +144,9 @@ const NewItem = () => {
                             {images.map(image => (
                                 <li>
                                     {image}
-                                    <FaTrashAlt size={23} onClick={deleteImageHandler} />
+                                    <button onClick={deleteImageHandler}>
+                                        <TrashIcon  />
+                                    </button>
                                 </li>
                             ))}
                         </ul>
@@ -221,7 +158,7 @@ const NewItem = () => {
                         <input 
                             type="file" 
                             onChange={(e) => uploadImageHandler(e, true)}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                            className="input-form"
                         />
                         {loadingUpload && (
                             <p className="font-semibold text-sm text-center">
@@ -240,7 +177,7 @@ const NewItem = () => {
                     <button 
                         type="submit"
                         disabled={loadingCreate}
-                        className="px-4 py-1 mb-4 text-sm text-white bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                        className="upload-btn"
                     >
                         Upload
                     </button>

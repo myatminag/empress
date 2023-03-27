@@ -17,6 +17,7 @@ body {
 /* ----- Input Form ----- */
 .input-form {
     @apply w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none;
+    
 }
 
 .textarea-form {
@@ -32,6 +33,11 @@ body {
 .swiper-btn {
     @apply px-4 py-2 lg:py-3 lg:w-[160px] text-white text-sm uppercase bg-primaryDark border rounded-[0.375rem] 
     border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200
+}
+
+.upload-btn {
+    @apply px-4 py-1 mb-4 text-sm text-white bg-primaryDark border rounded-[0.375rem] border-primaryDark hover:text-primaryDark 
+    hover:bg-white transition duration-200;
 }
 
 .pagination-btn {
