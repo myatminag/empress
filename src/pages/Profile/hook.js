@@ -9,6 +9,7 @@ import { Context } from 'context/user-context';
 import { UpdateSchema } from 'validations';
 import { BASE_URL } from 'constants/baseURL';
 
+/* ----- reducer ----- */
 const updateProfileReducer = (state, action) => {
     switch (action.type) {
         case "REQUEST_UPDATE_PROFILE":

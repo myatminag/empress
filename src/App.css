@@ -58,7 +58,7 @@ body {
 
 /* ----- table ----- */
 .list-table {
-    @apply w-[900px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto;
+    @apply w-[1200px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto;
 }
 
 /* ----- scrollbar ----- */
