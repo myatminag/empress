@@ -27,6 +27,7 @@ const Profile = () => {
                 <WebTitle title={"Account Info"} />
                 <SubTitle name={"Account Info"} />
                 <form onSubmit={handleSubmit} className="md:w-[450px] md:mx-auto">
+                    {/* ----- username ----- */}
                     <div className="mb-4">
                         <label htmlFor="username" className="block mb-2">
                             Username
@@ -41,6 +42,7 @@ const Profile = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- email ----- */}
                     <div className="mb-4">
                         <label htmlFor="email" className="block mb-2">
                             Email address
@@ -55,6 +57,7 @@ const Profile = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- password ----- */}
                     <div className="mb-8">
                         <label className="block mb-2">
                             Password
