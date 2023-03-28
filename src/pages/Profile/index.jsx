@@ -1,64 +1,24 @@
-import React, { useContext, useReducer, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BiShow, BiHide } from 'react-icons/bi';
-import { useFormik } from 'formik';
-import { toast, ToastContainer } from 'react-toastify';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 
-import { Context } from 'context/user-context';
-import { updateProfileReducer } from 'pages/Profile/reducer';
-import { UpdateSchema } from 'validations';
+import PwShowIcon from 'components/icons/PwShowIcon';
+import PwHideIcon from 'components/icons/PwHideIcon';
+import useProfile from './hook';
 import { WebTitle, ErrorField, SubTitle } from 'components';
-import { baseUrl } from 'utils/baseUrl';
 
 const Profile = () => {
 
-    const [showPassword, setShowPassword] = useState(false);
-
-    const navigate = useNavigate();
-
-    const { dispatch: updateDispatch } = useContext(Context);
-
-    const [{ loading }, dispatch] = useReducer(updateProfileReducer, {
-        loading: false
-    });
-
-    const onSubmit = async (values) => {
-        try {
-            dispatch({ type: "REQUEST_UPDATE_PROFILE" });
-
-            const { data } = await axios.put(
-                `${baseUrl}/server/user/profile`, values, {
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            updateDispatch({
-                type: "REQUEST_LOGIN",
-                payload: data.user
-            });
-
-            localStorage.setItem('userInfo', JSON.stringify(data.user)); 
-            localStorage.setItem('accessToken', data.token);
-            toast.success('Successfully Updated');
-            navigate('/');
-        } catch (error) {
-            dispatch({ type: "FAIL_UPDATE_PROFILE" });
-            navigate('*');
-        }
-    };
-
-    const { values, handleSubmit, handleChange, touched, errors, isSubmitting } = useFormik({ 
-        initialValues: {
-            username: '',
-            email: '',
-            password: '',
-        },
-        validateOnBlur: true,
-        onSubmit,
-        validationSchema: UpdateSchema
-    });
+    const {
+        showPassword, setShowPassword,
+        loading,
+        values,
+        handleSubmit,
+        handleChange,
+        touched,
+        errors,
+        isSubmitting
+    } = useProfile()
 
     return (
         <>
@@ -78,7 +38,7 @@ const Profile = () => {
                             placeholder="Please enter new username"
                             value={values.username}
                             onChange={handleChange}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-4">
@@ -92,7 +52,7 @@ const Profile = () => {
                             placeholder="Please enter new email"
                             value={values.email}
                             onChange={handleChange}
-                            className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                            className="input-form"
                         />
                     </div>
                     <div className="mb-8">
@@ -111,9 +71,9 @@ const Profile = () => {
                             />
                             <div onClick={() => setShowPassword(!showPassword)} className="cursor-pointer">
                                 {!showPassword ? (
-                                    <BiHide size={23} color="#0F2027" />
+                                    <PwHideIcon />
                                 ) : (
-                                    <BiShow size={23} color="#0F2027" />
+                                    <PwShowIcon />
                                 )}
                             </div>
                         </div>
@@ -121,7 +81,7 @@ const Profile = () => {
                     <button 
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                        className="default-btn"
                     >
                         {loading ? "Loading..." : "Save Changes"}
                     </button>
