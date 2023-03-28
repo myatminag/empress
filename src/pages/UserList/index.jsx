@@ -42,59 +42,63 @@ const AdminUserList = () => {
                             </p>
                         </div>
                     ) : (
-                        <div className="overflow-x-scroll scrollbar-none lg:overflow-hidden">
-                            <table className="list-table"
-                            >
-                                <thead className="text-left">
-                                    <tr className="border">
-                                        <th className="px-4 py-2">
-                                            ID
-                                        </th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {usersList.map((user) => (
-                                        <tr 
-                                            key={user._id}
-                                            className="border hover:bg-[#eaf4f4] transition-all duration-150"
-                                        >
-                                            <td className="px-4 py-3">
-                                                {user._id}
-                                            </td>
-                                            <td>
-                                                {user.username}
-                                            </td>
-                                            <td>
-                                                {user.email}
-                                            </td>
-                                            <td>
-                                                {user.isAdmin ? 'Admin' : 'User'}
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    disabled={user.idAdmin === true}
-                                                    onClick={() => deleteUserHandler(user)}    
-                                                    className="px-3 pt-1"
-                                                >
-                                                    <TrashIcon />
-                                                </button>
-                                            </td>
+                        <>
+                            {/* ----- data table ----- */}
+                            <div className="overflow-x-scroll scrollbar-none lg:overflow-hidden">
+                                <table className="list-table"
+                                >
+                                    <thead className="text-left">
+                                        <tr className="border">
+                                            <th className="px-4 py-2">
+                                                ID
+                                            </th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>
+                                                Action
+                                            </th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            {loadingDelete && (
-                                <p className="text-sm font-semibold text-center">
-                                    Loading...
-                                </p>
-                            )}
+                                    </thead>
+                                    <tbody>
+                                        {usersList.map((user) => (
+                                            <tr 
+                                                key={user._id}
+                                                className="border hover:bg-[#eaf4f4] transition-all duration-150"
+                                            >
+                                                <td className="px-4 py-3">
+                                                    {user._id}
+                                                </td>
+                                                <td>
+                                                    {user.username}
+                                                </td>
+                                                <td>
+                                                    {user.email}
+                                                </td>
+                                                <td>
+                                                    {user.isAdmin ? 'Admin' : 'User'}
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        disabled={user.idAdmin === true}
+                                                        onClick={() => deleteUserHandler(user)}    
+                                                        className="px-3 pt-1"
+                                                    >
+                                                        <TrashIcon />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                {loadingDelete && (
+                                    <p className="text-sm font-semibold text-center">
+                                        Loading...
+                                    </p>
+                                )}
+                                
+                            </div>
                             {/* ----- pagination ----- */}
                             <div className="flex items-center gap-x-3">
                                 {[...Array(pages).keys()].map((x) => (
@@ -110,7 +114,7 @@ const AdminUserList = () => {
                                     </Link>
                                 ))}
                             </div>
-                        </div>
+                        </>
                     )}
                 </div>
             )}
