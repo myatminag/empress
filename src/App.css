@@ -14,17 +14,16 @@ body {
     scroll-behavior: smooth;
 }
 
-/* ----- Input Form ----- */
+/* ----- input ----- */
 .input-form {
     @apply w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none;
-    
 }
 
 .textarea-form {
     @apply w-[100%] h-[150px] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none;
 }
 
-/* ----- Button ----- */
+/* ----- button ----- */
 .default-btn {
     @apply w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border 
     rounded-[0.375rem] border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200;
@@ -48,7 +47,7 @@ body {
     @apply w-[30px] px-2 py-1 font-semibold rounded-md text-white bg-primaryDark;
 }
 
-/* ----- Footer ----- */
+/* ----- footer ----- */
 .footer-shop-info {
     @apply flex items-center gap-x-2 mb-3 text-footerText hover:text-white transition-all duration-150 cursor-pointer;
 }
@@ -57,12 +56,12 @@ body {
     @apply text-footerText mb-3 hover:text-white transition-all duration-150 cursor-pointer;
 }
 
-/* ----- Table ----- */
+/* ----- table ----- */
 .list-table {
     @apply w-[900px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto;
 }
 
-/* ----- Scrollbar ----- */
+/* ----- scrollbar ----- */
 .scrollbar {
     scrollbar-width: thin;
     overflow-x: scroll;
