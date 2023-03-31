@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 import { BASE_URL } from "constants/api";
 
-const useOrderHistory = () => {
+const useHistory = () => {
     const { isLoading, error, data } = useQuery("orderHistory", async () => {
         const { data } = await axios.get(`${BASE_URL}/server/orders/client`, {
             headers: {
@@ -20,4 +20,4 @@ const useOrderHistory = () => {
     };
 };
 
-export default useOrderHistory;
+export default useHistory;
