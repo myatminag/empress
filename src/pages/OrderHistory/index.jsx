@@ -36,7 +36,7 @@ const OrderHistory = () => {
                     </div>
                 ) : (
                     <div className="overflow-x-scroll scrollbar-none lg:overflow-hidden">
-                        <table className="w-[900px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto">
+                        <table className="list-table">
                             <thead className="text-left">
                                 <tr className="border">
                                     <th className="px-4 py-2">
@@ -56,7 +56,9 @@ const OrderHistory = () => {
                                             {order._id}
                                         </td>
                                         <td>
-                                            {new Date(order.createdAt).toLocaleDateString('en-us', { year: "numeric", month: "long", day: "numeric" })}
+                                            {new Date(order.createdAt).toLocaleDateString('en-us', { 
+                                                year: "numeric", month: "long", day: "numeric" 
+                                            })}
                                         </td>
                                         <td>
                                             ${order.totalPrice}
