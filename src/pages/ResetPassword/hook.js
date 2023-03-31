@@ -7,48 +7,47 @@ import { RESET_PASSWORD } from "constants/api";
 import { PasswordSchema } from "validations/index";
 
 const useResetPassword = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const { resetToken } = useParams();
+    const { resetToken } = useParams();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showCPassword, setShowCPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showCPassword, setShowCPassword] = useState(false);
 
-  const onSubmit = async (values) => {
-    try {
-      await axios.put(
-        `${RESET_PASSWORD}/${resetToken}`,
-        values
-      );
+    const onSubmit = async (values) => {
+        try {
+            await axios.put(
+                `${RESET_PASSWORD}/${resetToken}`,
+                values
+            );
 
-      navigate("/");
-    } catch (error) {
-      navigate("*");
-    }
-  };
+            navigate("/");
+        } catch (error) {
+            navigate("*");
+        }
+    };
 
-  const { values, handleSubmit, handleChange, touched, errors, isSubmitting } =
-    useFormik({
-      initialValues: {
-        email: "",
-      },
-      validateOnBlur: true,
-      onSubmit,
-      validationSchema: PasswordSchema,
+    const { values, handleSubmit, handleChange, touched, errors, isSubmitting } = useFormik({
+        initialValues: {
+            email: "",
+        },
+        validateOnBlur: true,
+        onSubmit,
+        validationSchema: PasswordSchema,
     });
 
-  return {
-    showPassword,
-    setShowPassword,
-    showCPassword,
-    setShowCPassword,
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    isSubmitting,
-  };
+    return {
+        showPassword,
+        setShowPassword,
+        showCPassword,
+        setShowCPassword,
+        values,
+        handleSubmit,
+        handleChange,
+        touched,
+        errors,
+        isSubmitting,
+    };
 };
 
 export default useResetPassword;
