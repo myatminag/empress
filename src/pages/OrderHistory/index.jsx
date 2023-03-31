@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { AnimationLottie } from 'utils/animation';
 import { WebTitle, SubTitle, Waiting } from 'components'; 
-import useOrderHistory from './Hook';
+import useOrderHistory from './hook';
 
 const OrderHistory = () => {
 
