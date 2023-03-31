@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { BASE_URL } from "constants/api";
+import { GET_USER_LIST, DELTE_USET_LIST } from "constants/api";
 
 /* ----- reducer ----- */
 const userListReducer = (state, action) => {
@@ -75,7 +75,7 @@ const useUserList = () => {
             try {
                 dispatch({ type: "REQUEST_USER_LIST" });
                 const { data } = await axios.get(
-                    `${BASE_URL}/server/user/userslist?page=${page}`,
+                    `${GET_USER_LIST}?page=${page}`,
                     {
                         headers: {
                         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -111,7 +111,7 @@ const useUserList = () => {
         try {
             dispatch({ type: "REQUEST_DELETE_USER" });
 
-            await axios.delete(`${BASE_URL}/server/user/userslist/${user._id}`, {
+            await axios.delete(`${DELTE_USET_LIST}/${user._id}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
