@@ -1,1 +1,0 @@
-export const BASE_URL = "https://empress-api.onrender.com";

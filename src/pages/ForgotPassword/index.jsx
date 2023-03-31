@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 
 import { EmailSchema } from 'validations/index';
 import { WebTitle, SubTitle, ErrorField } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import { FORGET_PASSWORD } from 'constants/api';
 
 const ForgetPassword = () => {
 
@@ -16,7 +16,7 @@ const ForgetPassword = () => {
     const onSubmit = async (values) => {
         try {
             await axios.post(
-                `${baseUrl}/server/auth/forgot-password`, values
+                `${FORGET_PASSWORD}`, values
             );
             toast.success("Email Sent.");
         } catch (error) {

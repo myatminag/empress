@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { Context } from 'context/user-context';
 import { LoginSchema } from 'validations/index';
-import { baseUrl } from 'utils/baseUrl';
+import { LOGIN } from 'constants/api';
 
 export const useLogin = () => {
 
@@ -36,7 +36,7 @@ export const useLogin = () => {
         setIsLoading(true);
         try {
             const { data } = await axios.post(
-                `${baseUrl}/server/auth/login`, values
+                `${LOGIN}`, values
             );
 
             authDispatch({
