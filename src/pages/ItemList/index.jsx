@@ -72,7 +72,7 @@ const AdminItemList = () => {
                                             <button 
                                                 type="button"
                                                 onClick={() => navigate(`/edit-item/${item._id}`)}
-                                                className="px-3"
+                                                className=""
                                             >
                                                 <EditIcon />
                                             </button>
