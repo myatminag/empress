@@ -163,7 +163,8 @@ const useInvoice = () => {
                 dispatch({
                     type: "SUCCESS_INVOICE",
                     payload: data
-                })
+                });
+                navigate('/orders-list');
             } catch (error) {
                 dispatch({
                     type: "FAIL_INVOICE",
