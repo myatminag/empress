@@ -1,80 +1,25 @@
-import React, { useEffect, useReducer } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaTrashAlt, FaRegEdit } from 'react-icons/fa';
-import { toast, ToastContainer } from 'react-toastify';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 
-import { itemListReducer } from './reducer';
+import TrashIcon from 'components/icons/TrashIcon';
+import EditIcon from 'components/icons/EditIcon';
+import useItemList from './hook';
 import { WebTitle, SubTitle, Waiting } from 'components';
-import { ADMIN_GET_ITEM, DELETE_ITEM } from 'constants/api';
 
 const AdminItemList = () => {
 
-    const navigate = useNavigate();
-
-    // ?page=1
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search); 
-
-    const page = searchParams.get('page') || 1;
-
-    // fetch item list from api
-    const [{ loading, error, itemList, pages, loadingDelete, successDelete }, dispatch] = useReducer(itemListReducer, {
-        loading: true,
-        error: ''
-    });
-
-    useEffect(() => {
-        const fetchItemList = async () => { 
-            try {
-                dispatch({ type: "REQUEST_ITEM_LIST" });
-
-                const { data } = await axios.get(
-                    `${ADMIN_GET_ITEM}?page=${page}`, {
-                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                    }
-                );
-
-                dispatch({
-                    type: "SUCCESS_ITEM_LIST",
-                    payload: data
-                });
-            } catch (error) {
-                dispatch({
-                    type: "FAIL_ITEM_LIST",
-                    payload: error.res && error.res.data.message 
-                    ? error.res.data.message 
-                    : error.message
-                });
-                console.log(error);
-            }
-        };
-        if (successDelete) {
-            dispatch({ type: "RESET_DELETE_ITEM" });
-        } else {
-            fetchItemList();
-        }
-    }, [page, successDelete, navigate]);
-
-    /** Delete Item */
-    const deleteItemHandler = async (item) => {
-        try {
-            dispatch({ type: "REQUEST_DELETE_ITEM" });
-
-            await axios.delete(
-                `${DELETE_ITEM}/${item._id}`, {
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            dispatch({ type: "SUCCESS_DELETE_ITEM" });
-            toast.success('Success Delete');
-        } catch (error) {
-            dispatch({ type: "FAIL_DELETE_ITEM" });
-            navigate('*');
-        }
-    };
+    const {
+        navigate,
+        loading,
+        error,
+        itemList,
+        pages,
+        page,
+        loadingDelete,
+        deleteItemHandler
+    } = useItemList();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -86,66 +31,70 @@ const AdminItemList = () => {
             ) : error ? (
                 navigate('*')
             ) : (
-                <div className="overflow-x-scroll scrollbar-none lg:overflow-hidden">
-                    <table className="w-[900px] overflow-x-scroll mb-10 lg:w-[100%] border border-collapse border-spacing-2.5 table-auto">
-                        <thead className="text-left">
-                            <tr className="border">
-                                <th className="px-4 py-2">
-                                    ID
-                                </th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Category</th>
-                                <th>Brand</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {itemList.map((item) => (
-                                <tr 
-                                    key={item._id}
-                                    className="border hover:bg-[#eaf4f4] transition-all duration-150"
-                                > 
-                                    <td className="px-4 py-3">
-                                        {item._id}
-                                    </td>
-                                    <td>
-                                        {item.name}
-                                    </td>
-                                    <td>
-                                        ${item.price}
-                                    </td>
-                                    <td>
-                                        {item.category}
-                                    </td>
-                                    <td>
-                                        {item.brand}
-                                    </td>
-                                    <td className="">
-                                        <button 
-                                            type="button"
-                                            onClick={() => navigate(`/edit-item/${item._id}`)}
-                                            className="px-3"
-                                        >
-                                            <FaRegEdit size={17} color="#4361ee" />
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => deleteItemHandler(item)}    
-                                            className="px-3"
-                                        >
-                                            <FaTrashAlt size={17} color="#ef233c" />
-                                        </button>
-                                    </td>
+                <>
+                    {/* ----- data table ----- */}
+                    <div className="overflow-x-scroll scrollbar-none lg:overflow-hidden">
+                        <table className="list-table">
+                            <thead className="text-left">
+                                <tr className="border">
+                                    <th className="px-4 py-2">
+                                        ID
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Brand</th>
+                                    <th>Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {loadingDelete && (
-                        <p className="text-center text-sm font-semibold">
-                            Loading...
-                        </p>
-                    )}
+                            </thead>
+                            <tbody>
+                                {itemList.map((item) => (
+                                    <tr 
+                                        key={item._id}
+                                        className="border hover:bg-[#eaf4f4] transition-all duration-150"
+                                    > 
+                                        <td className="px-4 py-3">
+                                            {item._id}
+                                        </td>
+                                        <td>
+                                            {item.name}
+                                        </td>
+                                        <td>
+                                            ${item.price}
+                                        </td>
+                                        <td>
+                                            {item.category}
+                                        </td>
+                                        <td>
+                                            {item.brand}
+                                        </td>
+                                        <td className="">
+                                            <button 
+                                                type="button"
+                                                onClick={() => navigate(`/edit-item/${item._id}`)}
+                                                className="px-3"
+                                            >
+                                                <EditIcon />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => deleteItemHandler(item)}    
+                                                className="px-3"
+                                            >
+                                                <TrashIcon />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {loadingDelete && (
+                            <p className="text-center text-sm font-semibold">
+                                Loading...
+                            </p>
+                        )}
+                    </div>
+                    {/* ----- pagination ----- */}
                     <div className="flex items-center gap-x-3">
                         {[...Array(pages).keys()].map((x) => (
                             <Link 
@@ -153,14 +102,14 @@ const AdminItemList = () => {
                                 to={`/itemslist?page=${ x + 1 }`}
                             >
                                 <button 
-                                    className={Number(page) === x + 1 ? "w-[30px] px-2 py-1 font-semibold rounded-md text-white bg-primaryDark" : "w-[30px] px-2 py-1 border border-primaryDark rounded-md"}
+                                    className={Number(page) === x + 1 ? "active-pagination-btn" : "pagination-btn"}
                                 >
                                     {x + 1}
                                 </button>
                             </Link>
                         ))}
                     </div>
-                </div>
+                </>
             )}
         </section>
     )

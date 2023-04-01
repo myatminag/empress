@@ -97,7 +97,6 @@ const AdminUserList = () => {
                                         Loading...
                                     </p>
                                 )}
-                                
                             </div>
                             {/* ----- pagination ----- */}
                             <div className="flex items-center gap-x-3">
