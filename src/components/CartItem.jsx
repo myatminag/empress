@@ -5,7 +5,7 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 
 import { Context } from 'context/user-context';
-import { baseUrl } from 'utils/baseUrl';
+import { GET_ITEM_DETAIL } from 'constants/api';
 
 const CartItem = ({ item }) => {
 
@@ -13,9 +13,7 @@ const CartItem = ({ item }) => {
 
     const cartItemHandler = async (item, quantity) => {
         try {
-            const { data } = await axios.get(
-                `${baseUrl}/server/items/item/${item._id}`
-            )
+            const { data } = await axios.get(`${GET_ITEM_DETAIL}/${item._id}`)
 
             if (data.inStock < quantity) {
                 window.alert('Out of Stock')

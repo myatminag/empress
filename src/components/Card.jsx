@@ -4,7 +4,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 
 import { Context } from 'context/user-context';
-import { baseUrl } from 'utils/baseUrl';
+import { GET_ITEM_DETAIL } from 'constants/api';
 
 const Card = ({ items }) => {
 
@@ -17,9 +17,7 @@ const Card = ({ items }) => {
         try {
             const existingItem = cartItems.find((x) => x._id === items._id);
             const quantity = existingItem ? existingItem.quantity + 1 : 1; 
-            await axios.get(
-                `${baseUrl}/server/items/item/${item._id}`
-            );
+            await axios.get(`${GET_ITEM_DETAIL}/${item._id}`);
 
             cartDispatch({
                 type: "ADD_TO_CART",
