@@ -7,7 +7,7 @@ import { Context } from 'context/user-context';
 import { LoginSchema } from 'validations/index';
 import { LOGIN } from 'constants/api';
 
-export const useLogin = () => {
+const useLogin = () => {
 
     const navigate = useNavigate();
 
@@ -72,3 +72,5 @@ export const useLogin = () => {
         values, handleSubmit, handleChange, touched, errors
     }
 };
+
+export default useLogin;
