@@ -1,128 +1,26 @@
-import React, { useEffect, useReducer, useContext, useRef, useState } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
-import axios from 'axios';
 import parse from 'html-react-parser';
 
-import { Context } from 'context/user-context';
-import { itemDetailReducer } from './reducer';
+import useDetail from './hook';
 import { Rating, Loading, WebTitle, Description } from 'components';
-import { GET_ITEM_DETAIL, POST_REVIEW } from 'constants/api';
 
 const ItemDetail = () => {
 
-    const navigate = useNavigate();
-
-    let reviewsRef = useRef();
-
-    const [rating, setRating] = useState(0);
-    const [comment, setComment] = useState('');
-    const [color , setColor] = useState('');
-
-    // item detail
-    const location = useLocation();
-    const itemId = location.pathname.split("/")[2];
-
-    // fetch item details from api
-    const [{ loading, error, item, loadingReview }, dispatch] = useReducer(itemDetailReducer, {
-        loading: true,
-        item: [],
-        error: null
-    });
-
-    useEffect(() => {
-        const fetchingDetails = async () => {
-            try {
-                dispatch({ type: 'REQUEST_FETCHING' });
-
-                const res = await axios.get(`${GET_ITEM_DETAIL}/` + itemId);
-                
-                dispatch({
-                    type: 'SUCCESS_FETCHING',
-                    payload: res.data
-                })
-
-            } catch (error) {
-                dispatch({
-                    type: 'FAIL_FETCHING',
-                    payload: error.res && error.res.data.message 
-                        ? error.res.data.message 
-                        : error.message
-                });
-                navigate('*');
-            }
-        }
-        fetchingDetails();
-    }, [itemId, navigate]);
-
-    // get cart and userInfo from context
-    const { state, dispatch: cartDispatch } = useContext(Context);
-    const { cart, userInfo } = state;
-
-    // add to cart
-    const addToCartHandler = async () => {
-        try {
-            const existingItem = cart.cartItems.find((x) => x._id === item._id);
-            const quantity = existingItem ? existingItem.quantity + 1 : 1; 
-            const { data } = await axios.get(`${GET_ITEM_DETAIL}/${item._id}`);
-
-            if (data.inStock < quantity) {
-                window.alert('Out Of Stock');
-                return;
-            };
-            
-            cartDispatch({
-                type: "ADD_TO_CART",
-                payload: {
-                    ...item,
-                    quantity
-                }
-            })
-        } catch (error) {
-            navigate('*');
-        };
-    };
-
-    // review 
-    const reviewSubmitHandler = async (e) => {
-        e.preventDefault();
-        if (!comment || !rating) {
-            toast.error('Please enter comment and rating');
-        };
-
-        try {
-            dispatch({ type: "REQUEST_REVIEW" });
-
-            const { data } = await axios.post(
-                `${POST_REVIEW}/${item._id}/reviews`, 
-                { rating, comment, username: userInfo.user.username }, 
-                { headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}}` } }
-            );
-
-            console.log(data);
-            
-            dispatch({ type: "SUCCESS_REVIEW" });
-            toast.success("Review Submitted");
-
-            item.reviews.unshift(data.review);
-            item.numberOfReviews = data.numberOfReviews;
-            item.rating = data.rating;
-                
-            dispatch({ 
-                type: "REFRESH_ITEM",
-                payload: item
-            });
-
-            window.scrollTo({
-                behavior: 'smooth',
-                top: reviewsRef.current.offsetTop
-            })
-        } catch (error) {
-            dispatch({ type: "FAIL_REVIEW" });
-            navigate('*');
-        }
-    };
+    const {
+        reviewsRef,
+        userInfo,
+        rating, setRating,
+        comment, setComment,
+        color, setColor,
+        loading,
+        error,
+        item,
+        loadingReview,
+        addToCartHandler,
+        reviewSubmitHandler
+    } = useDetail();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -200,6 +98,7 @@ const ItemDetail = () => {
                     </div>
                     <hr className="my-6" />
                     <div className="lg:px-[20%]">
+                        {/* ----- review ----- */}
                         <div className="py-4 mb-5 overflow-y-scroll scrollbar-none lg:mb-0 lg:col-span-1">
                             {userInfo ? (
                                 <form onSubmit={reviewSubmitHandler}>
