@@ -1,66 +1,16 @@
-import React, { useContext, useReducer } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { orderReducer } from './reducer';
-import { Context } from 'context/user-context';
+import useOrder from './hook';
 import { WebTitle, SubTitle } from 'components';
-import { POST_ORDER } from 'constants/api';
 
 const Order = () => {
 
-    const navigate = useNavigate();
-
-    const { state, dispatch: orderDispatch } = useContext(Context); 
-    const { cart } = state;
-
-    /**
-     * item price
-     * delivery price
-     * tax price
-     * total price
-     */
-    const round = (num) => Math.round(num * 100 + Number.EPSILON) / 100  //123.456 => 123.45
-
-    cart.itemsPrice =  round(
-        cart.cartItems.reduce((accu, curItem) => accu + curItem.quantity * curItem.price, 0)
-    );
-    cart.deliveryPrice = cart.itemsPrice > 3000 ? round(0) : round(2.5);
-    cart.taxPrice = round(0.005 * cart.itemsPrice)
-    cart.totalPrice = cart.itemsPrice + cart.deliveryPrice + cart.taxPrice;
-
-    const [{ loading }, dispatch] = useReducer(orderReducer, {
-        loading: false,
-    });
-
-    // post order to api
-    const confirmOrderHandler = async () => {
-        const orderData = {
-            orderItems: cart.cartItems,
-            deliveryAddress: cart.deliveryAddress,
-            itemsPrice: cart.itemsPrice, 
-            deliveryPrice: cart.deliveryPrice,
-            taxPrice: cart.taxPrice,
-            totalPrice: cart.totalPrice,
-        }
-
-        try {
-            const { data } = await axios.post(
-                `${POST_ORDER}/`, orderData, {
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            orderDispatch({ type: "CLEAR_CART" });
-
-            dispatch({ type: "SUCCESS_ORDER" });
-
-            navigate(`/order/${data.order._id}`);
-        } catch (error) {
-            dispatch({ type: "FAIL_ORDER" });
-            navigate('*');
-        }   
-    };
+    const {
+        cart,
+        loading,
+        confirmOrderHandler
+    } = useOrder();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -79,6 +29,7 @@ const Order = () => {
                         </Link>
                     </div>
                     <div className="">
+                        {/* ----- cart items ----- */}
                         {cart.cartItems.map((item) => (
                             <>
                                 <div className="w-[100%] py-2 flex items-center gap-x-3 lg:justify-between">
@@ -87,7 +38,9 @@ const Order = () => {
                                         alt={item.name}
                                         className="w-[50%] lg:w-[20%]" 
                                     />
-                                    <div className="w-[100%] flex flex-col gap-y-1 lg:w-[60%] lg:flex-row lg:items-center lg:justify-between">
+                                    <div className="w-[100%] flex flex-col gap-y-1 lg:w-[60%] lg:flex-row lg:items-center 
+                                        lg:justify-between"
+                                    >
                                         <p className="w-[150px] text-sm text-secondaryDark">
                                             {item.brand}
                                         </p>
@@ -114,6 +67,7 @@ const Order = () => {
                     </div>
                 </div>
                 <div className="lg:col-span-1">
+                    {/* ----- delivery info ----- */}
                     <div className="mb-2 rounded-md">
                         <div className="mb-3 flex items-center justify-between">
                             <header className="font-semibold">
@@ -167,6 +121,7 @@ const Order = () => {
                         </div>
                     </div>
                     <hr className="my-3" />
+                    {/* ----- total payment ----- */}
                     <div>
                         <header className="mb-3 font-semibold">
                             Payment Info  
@@ -207,7 +162,7 @@ const Order = () => {
                         <button 
                             type="button"
                             onClick={confirmOrderHandler}
-                            className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                            className="default-btn"
                         >
                             Confirm Order
                         </button>
