@@ -1,171 +1,28 @@
-import React, { useEffect, useReducer, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import { toast } from 'react-toastify';
+import React from 'react';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import { motion } from 'framer-motion';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
-import axios from 'axios';
 
-import { Context } from 'context/user-context';
-import { invoiceReducer } from './reducer'; 
+import useInvoice from './hook'; 
 import { Loading, Stripe, WebTitle } from 'components';
-import { PAYPAL_PAYMENT, GET_ORDET_DETAIL, GET_PAYPEL_KEYS, DELIVER_ORDER } from 'constants/api';
 
 const Invoice = () => {
 
-    const navigate = useNavigate();
-
-    /** User Context */
-    const { state } = useContext(Context);
-    const { userInfo } = state;
-
-    /** Order Detail */
-    const params = useParams();
-    const { id: orderId } = params;
-
-    const [{ loading, error, order, loadingPayment, successPayment, loadingDelivery, successDelivery }, dispatch] = useReducer(invoiceReducer, {
-        loading: true,
-        order: {},
-        error: false,
-        loadingPayment: false,
-        successPayment: false
-    });
-
-    /** Paypal */
-    const [{ pending }, paypalDispatch] = usePayPalScriptReducer();
-
-    const createOrder = (data, actions) => {
-        return actions.order.create({
-            purchase_units: [{
-                amount: { value: order.totalPrice }
-            }]
-        })
-        .then((orderId) => {
-            return orderId
-        })
-    };
-
-    const onApprove = (data, actions) => {
-        return actions.order.capture().then(async function (details) {
-            try {
-                dispatch({ type: "REQUEST_PAYMENT" });
-
-                const { data } = await axios.put(
-                    `${PAYPAL_PAYMENT}/${orderId}/pay`, details, {
-                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                    }
-                );
-
-                dispatch({
-                    type: "SUCCESS_PAYMENT",
-                    payload: data
-                });
-
-                toast.success('Successfully Paid');
-            } catch (error) {
-                dispatch({
-                    type: "FAIL_PAYMENT",
-                    payload: error.res && error.res.data.message 
-                        ? error.res.data.message 
-                        : error.message
-                });
-                navigate('*');
-            }
-        })
-    };
-
-    /** Error */
-    const onError = (error) => {
-        toast.error(error.message);
-    };
-
-    // fetch order details from api
-    useEffect(() => {
-        const fetchingInvoice = async () => {
-            try {
-                dispatch({ type: "REQUEST_INVOICE" });
-
-                const { data } = await axios.get(
-                    `${GET_ORDET_DETAIL}/${orderId}`, {
-                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                    }
-                );
-
-                dispatch({
-                    type: "SUCCESS_INVOICE",
-                    payload: data
-                })
-            } catch (error) {
-                dispatch({
-                    type: "FAIL_INVOICE",
-                    payload: error.message
-                });
-                navigate('*');
-            }
-        }
-
-        if (!userInfo) {
-            navigate('/login');
-        };
-
-        if (!order._id || successPayment || successDelivery || (order._id && order._id !== orderId)) {
-            fetchingInvoice();
-
-            if (successPayment) {
-                dispatch({ type: "RESET_PAYMENT" });
-            };
-
-            if (successDelivery) {
-                dispatch({ type: "RESET_DELIVERY" });
-            };
-        } else {
-            // Paypal
-            const loadingPaypal = async () => {
-                const { data: clientId } = await axios.get(
-                    `${GET_PAYPEL_KEYS}`, {
-                        headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                    }
-                );
- 
-                paypalDispatch({
-                    type: "resetOptions",
-                    value: {
-                        'client-id': clientId,
-                        currency: 'USD'
-                    }
-                });
-                paypalDispatch({
-                    type: "setLoadingStatus",
-                    value: "pending"
-                })
-            };
-
-            loadingPaypal();
-        }
-    }, [navigate, order, orderId, userInfo, paypalDispatch, successPayment, successDelivery]);
-
-    // Deliver Order
-    const deliverHandler = async () => {
-        try {
-            dispatch({ type: "REQUEST_DELIVERY" });
-
-            const { data } = await axios.put(
-                `${DELIVER_ORDER}/${order._id}/delivery`, {} , {
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            dispatch({
-                type: "SUCCESS_DELIVERY",
-                payload: data
-            });
-            toast.success('Success Delivery');
-        } catch (error) {   
-            dispatch({ type: "FAIL_DELIVERY" });
-            navigate('*');
-        }
-    };
+    const {
+        userInfo,
+        orderId,
+        loading,
+        error,
+        order,
+        loadingPayment,
+        loadingDelivery,
+        pending,
+        createOrder,
+        onApprove,
+        onError,
+        deliverHandler
+    } = useInvoice();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -179,6 +36,7 @@ const Invoice = () => {
                 <div>
                     <WebTitle title={`Invoice ${orderId}`} />
                     <div>
+                        {/* ----- isadmin condition ----- */}
                         {userInfo.isAdmin ? (
                             <div>
                                 <p className="mb-4 text-lg">
@@ -211,6 +69,7 @@ const Invoice = () => {
                             </div>
                         )}
                         <hr className="my-6" />
+                        {/* ----- order detail ----- */}
                         <div className="grid grid-cols-2 lg:grid-cols-7">
                             <div className="mb-2 lg:mb-0">
                                 <p className="mb-1 font-semibold">
@@ -282,6 +141,7 @@ const Invoice = () => {
                             </div>
                         </div>
                         <hr className="my-6" />
+                        {/* ----- order items ----- */}
                         <div>
                             {order.orderItems.map((item) => (
                                 <div className="mb-5 grid grid-cols-2 lg:grid-cols-4">
@@ -317,6 +177,7 @@ const Invoice = () => {
                             ))}
                         </div>
                         <hr className="my-6" />
+                        {/* ----- total payment ----- */}
                         <div className="mb-3 flex justify-between items-center">
                             <p className="">
                                 Items Price: {" "}     
@@ -350,11 +211,12 @@ const Invoice = () => {
                             </p>
                         </div>
                         <hr className="my-6" />
+                        {/* ----- description ----- */}
                         <div className="grid lg:grid-cols-3">
                             <div className="mb-4 lg:mb-0 lg:col-span-2">
                                 <p className="mb-3">
-                                    After processing payment, we'll send you delivery confirmation. We appreciate your business, and hope you
-                                    enjoy your purchase.
+                                    After processing payment, we'll send you delivery confirmation. We appreciate your business, 
+                                    and hope you enjoy your purchase.
                                 </p>
                                 <p className="mb-1">
                                     Thank you!
@@ -364,6 +226,7 @@ const Invoice = () => {
                                 </p>
                             </div>
                             <div className="lg:col-span-1">
+                                {/* ----- not admin ----- */}
                                 {userInfo.isAdmin !== true && !order.isPaid && (
                                     <div> 
                                         {pending ? (
@@ -390,6 +253,7 @@ const Invoice = () => {
                                         )}
                                     </div>
                                 )}
+                                {/* ----- is admin ----- */}
                                 {userInfo.isAdmin === true && order.isPaid && !order.isDelivered && (
                                     <motion.div whileTap={{ scale: 0.95 }}>
                                         {loadingDelivery && (
@@ -400,7 +264,7 @@ const Invoice = () => {
                                         <button 
                                             type="button"
                                             onClick={deliverHandler}
-                                            className="w-[100%] px-6 py-1 text-white text-sm bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                                            className="default-btn"
                                         >
                                             Deliver Order
                                         </button>
