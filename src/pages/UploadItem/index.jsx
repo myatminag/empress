@@ -29,6 +29,7 @@ const NewItem = () => {
             <SubTitle name={"Upload Item"} />
             <form onSubmit={uploadItemHandler}>
                 <div className="lg:grid lg:grid-cols-4 lg:gap-x-6">
+                    {/* ----- item name ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Item Name
@@ -42,7 +43,8 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
-                    <div className="mb-4 lg:col-span-1">
+                    {/* ----- model name ----- */}
+                    <div className="mb-4">
                         <label className="block mb-2 font-[500]">
                             Model Name
                         </label>
@@ -55,6 +57,7 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- brand ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Brand
@@ -68,6 +71,7 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- price ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Price
@@ -81,6 +85,7 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- category ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Category
@@ -94,6 +99,7 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- image ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Image
@@ -107,6 +113,7 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- upalod image ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Upload Image
@@ -123,6 +130,7 @@ const NewItem = () => {
                             </p>
                         )}
                     </div>
+                    {/* ----- inStock ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             In Stock
@@ -135,6 +143,7 @@ const NewItem = () => {
                             className="input-form"
                         />
                     </div>
+                    {/* ----- additional images ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Additional Images
@@ -151,6 +160,7 @@ const NewItem = () => {
                             ))}
                         </ul>
                     </div>
+                    {/* ----- upload additional images ----- */}
                     <div className="mb-4 lg:col-span-1">
                         <label className="block mb-2 font-[500]">
                             Upload Additional Images
@@ -166,6 +176,7 @@ const NewItem = () => {
                             </p>
                         )}
                     </div>
+                    {/* ----- description ----- */}
                     <div className="mb-4 lg:col-span-4">
                         <label className="block mb-2 font-[500]">
                             Description

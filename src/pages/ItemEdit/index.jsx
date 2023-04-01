@@ -1,126 +1,31 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { FaTrashAlt } from 'react-icons/fa';
-import axios from 'axios';
+import React from 'react';
 
-import { itemEditReducer } from './reducer';
+import TrashIcon from 'components/icons/TrashIcon';
+import useItemEdit from './hook';
 import { SubTitle, Editor, WebTitle, Loading, ErrorField } from 'components';
-import { EDIT_ITEM, UPDATE_ITEM, UPLOAD_IMAGE } from 'constants/api';
 
 const AdminItemEdit = (props) => {
 
-    const navigate = useNavigate();
-
-    // item/:id
-    const params = useParams();
-    const { id: itemId } = params;
-
-    const [name, setName] = useState('');
-    const [modelName, setModelName] = useState('');
-    const [brand, setBrand] = useState(''); 
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState(null);
-    const [category, setCategory] = useState('');
-    const [image, setImage] = useState('');
-    const [images, setImages] = useState([]);
-    const [inStock, setInStock] = useState('')
-
-    // fetch item details from api
-    const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] = useReducer(itemEditReducer, {
-        loading: true,
-        error: ''
-    });
-
-    useEffect(() => {
-        const fetchItemData = async () => {
-            try {   
-                dispatch({ type: "REQUEST_ITEM_EDIT" });
-
-                const { data } = await axios.get(`${EDIT_ITEM}/${itemId}`);
-
-                setName(data.name);
-                setModelName(data.modelName);
-                setBrand(data.brand);
-                setPrice(data.price);
-                setDescription(data.description);
-                setCategory(data.category);
-                setImage(data.image);
-                setImages(data.images)
-                setInStock(data.inStock);
-
-                dispatch({ type: "SUCCESS_ITEM_EDIT" });
-            } catch (error) {
-                dispatch({ 
-                    type: "FAIL_ITEM_EDIT",
-                    payload: error.res && error.res.data.message 
-                        ? error.res.data.message 
-                        : error.message
-                });
-                navigate('*')
-            }
-        }
-        fetchItemData();
-    }, [itemId, navigate]);
-
-    // update item 
-    const updateItemHandler = async (e) => {
-        e.preventDefault();
-        try {
-            dispatch({ type: "REQUEST_ITEM_UPDATE" });
-
-            await axios.put(
-                `${UPDATE_ITEM}/${itemId}`, {
-                    _id: itemId,
-                    name, modelName, brand,
-                    price, description, category, 
-                    image, images, inStock
-                }, {
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
-
-            dispatch({ type: "SUCCESS_ITEM_UPDATE" });
-            toast.success('Success Update');
-            navigate('/items-list');
-        } catch (error) {
-            dispatch({ type: "FAIL_UPDATE_ITEM" });
-            console.log(error);
-        }
-    };
-
-    /** Image Upload */
-    const uploadImageHandler = async (e, multiImages) => { 
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        
-        try {
-            dispatch({ type: "REQUEST_UPLOAD" });
-
-            const { data } = await axios.post(`${UPLOAD_IMAGE}`, formData, { 
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                }
-            });
-
-            dispatch({ type: "SUCCESS_UPLOAD" });
-            if (multiImages) {
-                setImages([...images, data.secure_url]);
-            } else {
-                setImage(data.secure_url);
-            };
-        } catch (error) {
-            dispatch({ type: "FAIL_UPLOAD" });
-            console.log(error);
-            navigate('*');
-        }
-    };
-
-    const deleteImageHandler = async (imageFile) => {
-        setImages(images.filter(image => image === imageFile))
-    };
+    const {
+        navigate,
+        itemId,
+        name, setName,
+        modelName, setModelName,
+        brand, setBrand,
+        price, setPrice,
+        description, setDescription,
+        category, setCategory,
+        image, setImage,
+        images,
+        inStock, setInStock,
+        loading,
+        error,
+        loadingUpdate,
+        loadingUpload,
+        updateItemHandler,
+        uploadImageHandler,
+        deleteImageHandler
+    } = useItemEdit();
 
     return (
         <section className="px-3 py-6 lg:px-6">
@@ -134,19 +39,21 @@ const AdminItemEdit = (props) => {
                 <div>
                     <form onSubmit={updateItemHandler}>
                         <div className="lg:grid lg:grid-cols-4 lg:gap-x-5">
-                            <div className="mb-4">
+                            {/* ----- item name ----- */}
+                            <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
-                                    Name
+                                    Item Name
                                 </label>
                                 <input 
                                     type="text"
                                     value={name}
                                     required
                                     onChange={(e) => setName(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
-                            <div className="mb-4">
+                            {/* ----- model name ----- */}
+                            <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Model Name
                                 </label>
@@ -155,9 +62,10 @@ const AdminItemEdit = (props) => {
                                     value={modelName}
                                     required
                                     onChange={(e) => setModelName(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
+                            {/* ----- brand ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]"> 
                                     Brand
@@ -167,9 +75,10 @@ const AdminItemEdit = (props) => {
                                     value={brand}
                                     required
                                     onChange={(e) => setBrand(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
+                            {/* ----- price ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Price
@@ -179,9 +88,10 @@ const AdminItemEdit = (props) => {
                                     value={price}
                                     required
                                     onChange={(e) => setPrice(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
+                            {/* ----- category ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Category
@@ -191,9 +101,10 @@ const AdminItemEdit = (props) => {
                                     value={category}
                                     required
                                     onChange={(e) => setCategory(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
+                            {/* ----- image ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Image
@@ -203,9 +114,10 @@ const AdminItemEdit = (props) => {
                                     value={image}
                                     required
                                     onChange={(e) => setImage(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
+                            {/* ----- upalod image ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Upload Image
@@ -214,7 +126,7 @@ const AdminItemEdit = (props) => {
                                     type="file" 
                                     required
                                     onChange={uploadImageHandler}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                                 {loadingUpload && (
                                     <p className="font-semibold text-sm text-center">
@@ -222,6 +134,7 @@ const AdminItemEdit = (props) => {
                                     </p>
                                 )}
                             </div>
+                            {/* ----- inStock ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     In Stock
@@ -231,9 +144,10 @@ const AdminItemEdit = (props) => {
                                     value={inStock}
                                     required
                                     onChange={(e) => setInStock(e.target.value)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                             </div>
+                            {/* ----- additional images ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Additional Images
@@ -243,11 +157,14 @@ const AdminItemEdit = (props) => {
                                     {images.map(image => (
                                         <li>
                                             {image}
-                                            <FaTrashAlt size={23} onClick={deleteImageHandler} />
+                                            <div onClick={deleteImageHandler}>
+                                                <TrashIcon />
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
+                            {/* ----- upload additional images ----- */}
                             <div className="mb-4 lg:col-span-1">
                                 <label className="block mb-2 font-[500]">
                                     Upload Additional Images
@@ -256,7 +173,7 @@ const AdminItemEdit = (props) => {
                                     type="file" 
                                     required
                                     onChange={(e) => uploadImageHandler(e, true)}
-                                    className="w-[100%] px-4 py-2 rounded-md border text-sm focus:outline-none"
+                                    className="input-form"
                                 />
                                 {loadingUpload && (
                                     <p className="font-semibold text-sm text-center">
@@ -264,6 +181,7 @@ const AdminItemEdit = (props) => {
                                     </p>
                                 )}
                             </div>
+                            {/* ----- description ----- */}
                             <div className="mb-4 lg:col-span-4">
                                 <label className="block mb-2 font-[500]">
                                     Description
@@ -275,7 +193,7 @@ const AdminItemEdit = (props) => {
                             <button 
                                 type="submit"
                                 disabled={loadingUpdate}
-                                className="px-4 py-1 mb-4 text-sm text-white bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                                className="upload-btn"
                             >
                                 Update
                             </button>
