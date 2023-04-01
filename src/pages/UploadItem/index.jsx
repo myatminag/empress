@@ -188,7 +188,7 @@ const NewItem = () => {
                     <button 
                         type="submit"
                         disabled={loadingCreate}
-                        className="upload-btn"
+                        className="secondary-btn "
                     >
                         Upload
                     </button>

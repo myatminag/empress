@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import API from './api';
+import API from './hook';
 import { Card, AdsSwiper, Brand, Featured, Waiting } from 'components';
 
 const Item = () => {
@@ -32,7 +32,7 @@ const Item = () => {
                 </div>
                 <div className="w-[100%] flex items-start justify-center">
                     <Link to='/shop?category=Notebooks&brand=Apple&query=all&price=all&rating=all&order=newest&page=1'>
-                        <button className="px-4 py-2 lg:py-3 text-white text-xs uppercase bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200">
+                        <button className="secondary-btn">
                             View More
                         </button>
                     </Link>
@@ -41,7 +41,7 @@ const Item = () => {
             <Brand />
             <div className="px-3 py-6 mb-8 lg:px-[8%]">
                 <Link to='/shop'>
-                    <button className="px-4 py-2 mb-8 lg:py-3 text-white text-lg uppercase bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200">
+                    <button className="secondary-btn ">
                         New Arrival
                     </button>
                 </Link>

@@ -193,7 +193,7 @@ const AdminItemEdit = (props) => {
                             <button 
                                 type="submit"
                                 disabled={loadingUpdate}
-                                className="upload-btn"
+                                className="secondary-btn "
                             >
                                 Update
                             </button>
