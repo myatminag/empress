@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { Context } from 'context/user-context'; 
-import { baseUrl } from 'utils/baseUrl';
+import { STRIPE_PAYMENT } from 'constants/api';
 
 const Stripe = ({ orderItems }) => {
 
@@ -15,13 +15,12 @@ const Stripe = ({ orderItems }) => {
 
     const paymentHandler = async () => {
         try {
-            const res = await axios.post(
-                `${baseUrl}/server/payment/create-checkout-session/${orderId}`, {
-                    orderItems,
-                    userId: userInfo._id,
-                    headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-                }
-            );
+            const res = await axios.post(`${STRIPE_PAYMENT}/${orderId}`, {
+                orderItems,
+                userId: userInfo._id,
+                headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
+            });
+            
             localStorage.removeItem('cart');
             if (res.data.url) {
                 window.location.href = res.data.url;

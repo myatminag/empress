@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { itemEditReducer } from './reducer';
 import { SubTitle, Editor, WebTitle, Loading, ErrorField } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import { EDIT_ITEM, UPDATE_ITEM, UPLOAD_IMAGE } from 'constants/api';
 
 const AdminItemEdit = (props) => {
 
@@ -37,9 +37,7 @@ const AdminItemEdit = (props) => {
             try {   
                 dispatch({ type: "REQUEST_ITEM_EDIT" });
 
-                const { data } = await axios.get(
-                    `${baseUrl}/server/items/item/${itemId}`
-                );
+                const { data } = await axios.get(`${EDIT_ITEM}/${itemId}`);
 
                 setName(data.name);
                 setModelName(data.modelName);
@@ -72,7 +70,7 @@ const AdminItemEdit = (props) => {
             dispatch({ type: "REQUEST_ITEM_UPDATE" });
 
             await axios.put(
-                `${baseUrl}/server/items/item/${itemId}`, {
+                `${UPDATE_ITEM}/${itemId}`, {
                     _id: itemId,
                     name, modelName, brand,
                     price, description, category, 
@@ -100,14 +98,12 @@ const AdminItemEdit = (props) => {
         try {
             dispatch({ type: "REQUEST_UPLOAD" });
 
-            const { data } = await axios.post(
-                `${baseUrl}/server/upload`, formData, { 
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                    }
+            const { data } = await axios.post(`${UPLOAD_IMAGE}`, formData, { 
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 }
-            );
+            });
 
             dispatch({ type: "SUCCESS_UPLOAD" });
             if (multiImages) {

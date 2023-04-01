@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { BASE_URL } from "constants/api";
+import { GET_ORDER_LIST, DELETE_ORDER } from "constants/api";
 
 /* ----- reducer ----- */
 const orderListReducer = (state, action) => {
@@ -74,7 +74,7 @@ const useOrderList = () => {
             try {
                 dispatch({ type: "REQUEST_ORDER_LIST" });
 
-                const { data } = await axios.get(`${BASE_URL}/server/orders/admin?page=${page}`, {
+                const { data } = await axios.get(`${GET_ORDER_LIST}?page=${page}`, {
                     headers: {
                         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                     },
@@ -107,7 +107,7 @@ const useOrderList = () => {
         try {
             dispatch({ type: "REQUEST_DELETE_ORDER" });
 
-            await axios.delete(`${BASE_URL}/server/orders/order/${order._id}`, {
+            await axios.delete(`${DELETE_ORDER}/${order._id}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },

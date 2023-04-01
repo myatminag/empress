@@ -35,9 +35,7 @@ export const useLogin = () => {
     const onSubmit = async (values) => { 
         setIsLoading(true);
         try {
-            const { data } = await axios.post(
-                `${LOGIN}`, values
-            );
+            const { data } = await axios.post(`${LOGIN}`, values);
 
             authDispatch({
                 type: "REQUEST_LOGIN",

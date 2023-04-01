@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import { itemListReducer } from './reducer';
 import { WebTitle, SubTitle, Waiting } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import { ADMIN_GET_ITEM, DELETE_ITEM } from 'constants/api';
 
 const AdminItemList = () => {
 
@@ -31,7 +31,7 @@ const AdminItemList = () => {
                 dispatch({ type: "REQUEST_ITEM_LIST" });
 
                 const { data } = await axios.get(
-                    `${baseUrl}/server/items/admin?page=${page}`, {
+                    `${ADMIN_GET_ITEM}?page=${page}`, {
                         headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
@@ -63,7 +63,7 @@ const AdminItemList = () => {
             dispatch({ type: "REQUEST_DELETE_ITEM" });
 
             await axios.delete(
-                `${baseUrl}/server/items/item/${item._id}`, {
+                `${DELETE_ITEM}/${item._id}`, {
                     headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );

@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 
-import { baseUrl } from "utils/baseUrl";
+import { GET_ITEM } from "constants/api";
 
 const API = () => {
   const { isLoading, error, data } = useQuery("home", async () => {
-    const { data } = await axios.get(`${baseUrl}/server/Items`);
+    const { data } = await axios.get(`${GET_ITEM}`);
     return data;
   });
 

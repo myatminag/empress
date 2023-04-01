@@ -8,7 +8,7 @@ import parse from 'html-react-parser';
 import { Context } from 'context/user-context';
 import { itemDetailReducer } from './reducer';
 import { Rating, Loading, WebTitle, Description } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import { GET_ITEM_DETAIL, POST_REVIEW } from 'constants/api';
 
 const ItemDetail = () => {
 
@@ -36,9 +36,7 @@ const ItemDetail = () => {
             try {
                 dispatch({ type: 'REQUEST_FETCHING' });
 
-                const res = await axios.get(
-                    `${baseUrl}/server/items/item/` + itemId
-                );
+                const res = await axios.get(`${GET_ITEM_DETAIL}/` + itemId);
                 
                 dispatch({
                     type: 'SUCCESS_FETCHING',
@@ -67,9 +65,7 @@ const ItemDetail = () => {
         try {
             const existingItem = cart.cartItems.find((x) => x._id === item._id);
             const quantity = existingItem ? existingItem.quantity + 1 : 1; 
-            const { data } = await axios.get(
-                `${baseUrl}/server/items/item/${item._id}`
-            );
+            const { data } = await axios.get(`${GET_ITEM_DETAIL}/${item._id}`);
 
             if (data.inStock < quantity) {
                 window.alert('Out Of Stock');
@@ -99,7 +95,7 @@ const ItemDetail = () => {
             dispatch({ type: "REQUEST_REVIEW" });
 
             const { data } = await axios.post(
-                `${baseUrl}/server/items/${item._id}/reviews`, 
+                `${POST_REVIEW}/${item._id}/reviews`, 
                 { rating, comment, username: userInfo.user.username }, 
                 { headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}}` } }
             );

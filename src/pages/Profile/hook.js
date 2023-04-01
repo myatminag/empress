@@ -7,7 +7,7 @@ import axios from "axios";
 
 import { Context } from "context/user-context";
 import { UpdateSchema } from "validations";
-import { BASE_URL } from "constants/api";
+import { UPDATE_PROFILE } from "constants/api";
 
 /* ----- reducer ----- */
 const updateProfileReducer = (state, action) => {
@@ -48,7 +48,7 @@ const useProfile = () => {
         try {
             dispatch({ type: "REQUEST_UPDATE_PROFILE" });
 
-            const { data } = await axios.put(`${BASE_URL}/server/user/profile`, values, {
+            const { data } = await axios.put(`${UPDATE_PROFILE}`, values, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },

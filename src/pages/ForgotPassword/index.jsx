@@ -15,9 +15,7 @@ const ForgetPassword = () => {
 
     const onSubmit = async (values) => {
         try {
-            await axios.post(
-                `${FORGET_PASSWORD}`, values
-            );
+            await axios.post(`${FORGET_PASSWORD}`, values);
             toast.success("Email Sent.");
         } catch (error) {
             navigate('*');

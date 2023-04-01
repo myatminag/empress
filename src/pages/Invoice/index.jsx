@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Context } from 'context/user-context';
 import { invoiceReducer } from './reducer'; 
 import { Loading, Stripe, WebTitle } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import { PAYPAL_PAYMENT, GET_ORDET_DETAIL, GET_PAYPEL_KEYS, DELIVER_ORDER } from 'constants/api';
 
 const Invoice = () => {
 
@@ -52,7 +52,7 @@ const Invoice = () => {
                 dispatch({ type: "REQUEST_PAYMENT" });
 
                 const { data } = await axios.put(
-                    `${baseUrl}/server/orders/${orderId}/pay`, details, {
+                    `${PAYPAL_PAYMENT}/${orderId}/pay`, details, {
                         headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
@@ -87,7 +87,7 @@ const Invoice = () => {
                 dispatch({ type: "REQUEST_INVOICE" });
 
                 const { data } = await axios.get(
-                    `${baseUrl}/server/orders/${orderId}`, {
+                    `${GET_ORDET_DETAIL}/${orderId}`, {
                         headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
@@ -123,7 +123,7 @@ const Invoice = () => {
             // Paypal
             const loadingPaypal = async () => {
                 const { data: clientId } = await axios.get(
-                    `${baseUrl}/server/keys/paypal`, {
+                    `${GET_PAYPEL_KEYS}`, {
                         headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                     }
                 );
@@ -151,7 +151,7 @@ const Invoice = () => {
             dispatch({ type: "REQUEST_DELIVERY" });
 
             const { data } = await axios.put(
-                `${baseUrl}/server/orders/${order._id}/delivery`, {} , {
+                `${DELIVER_ORDER}/${order._id}/delivery`, {} , {
                     headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );

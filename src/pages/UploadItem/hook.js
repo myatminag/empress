@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { BASE_URL } from "constants/api";
+import { POST_ITEM, UPLOAD_IMAGE } from "constants/api";
 
 /* ----- reducer ----- */
 const uploadItemReducer = (state, action) => {
@@ -84,7 +84,7 @@ const useUploadItem = () => {
         try {
             dispatch({ type: "REQUEST_CREATE_ITEM" });
 
-            await axios.post(`${BASE_URL}/server/items/create`, itemData, {
+            await axios.post(`${POST_ITEM}`, itemData, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
@@ -109,7 +109,7 @@ const useUploadItem = () => {
         try {
             dispatch({ type: "REQUEST_UPLOAD" });
 
-            const { data } = await axios.post(`${BASE_URL}/server/upload`, formData, {
+            const { data } = await axios.post(`${UPLOAD_IMAGE}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     authorization: `Bearer ${localStorage.getItem("accessToken")}`,

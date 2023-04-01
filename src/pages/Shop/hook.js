@@ -2,7 +2,7 @@ import { useState, useReducer, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-import { BASE_URL } from "constants/api";
+import { GET_ITEM, GET_CATEGORIES, GET_BRAND } from "constants/api";
 
 /* ----- reducer ----- */
 const ItemSearchReducer = (state, action) => {
@@ -69,7 +69,7 @@ const useShop = () => {
             dispatch({ type: "FETCH_SEARCH_ITEM" });
 
             const { data } = await axios.get(
-                `${BASE_URL}/server/items/shop?brand=${brand}&category=${category}&query=${query}&price=${price}&order=${order}&page=${page}`
+                `${GET_ITEM}/shop?brand=${brand}&category=${category}&query=${query}&price=${price}&order=${order}&page=${page}`
             );
 
             dispatch({
@@ -96,7 +96,7 @@ const useShop = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const { data } = await axios.get(`${BASE_URL}/server/items/categories`);
+                const { data } = await axios.get(`${GET_CATEGORIES}`);
                 setCategories(data);
             } catch (error) {
                 navigate("*");
@@ -111,7 +111,7 @@ const useShop = () => {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const { data } = await axios.get(`${BASE_URL}/server/items/brands`);
+                const { data } = await axios.get(`${GET_BRAND}`);
                 setBrands(data);
             } catch (error) {
                 navigate("*");

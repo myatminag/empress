@@ -5,7 +5,7 @@ import axios from 'axios';
 import { orderReducer } from './reducer';
 import { Context } from 'context/user-context';
 import { WebTitle, SubTitle } from 'components';
-import { baseUrl } from 'utils/baseUrl';
+import { POST_ORDER } from 'constants/api';
 
 const Order = () => {
 
@@ -46,7 +46,7 @@ const Order = () => {
 
         try {
             const { data } = await axios.post(
-                `${baseUrl}/server/orders/new/`, orderData, {
+                `${POST_ORDER}/`, orderData, {
                     headers: { authorization: `Bearer ${localStorage.getItem("accessToken")}` }
                 }
             );
