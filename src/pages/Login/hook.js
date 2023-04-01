@@ -52,7 +52,7 @@ const useLogin = () => {
             setUnauthorized(true)
             setTimeout(() => {
                 setUnauthorized(false);
-            }, 5000)
+            }, 6000)
             setIsLoading(false);
         }
     };

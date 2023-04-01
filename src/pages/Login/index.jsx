@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BiShow, BiHide } from 'react-icons/bi';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
+import PwShowIcon from 'components/icons/PwShowIcon';
+import PwHideIcon from 'components/icons/PwHideIcon';
 import { WebTitle, ErrorField, SubTitle } from 'components';
 import useLogin from './hook';
 
@@ -19,14 +22,10 @@ const Login = () => {
             <form onSubmit={handleSubmit} className="md:w-[450px] md:mx-auto">
                 <div className="mb-4">
                     {unauthorized && (
-                        <div className="mb-3 px-3 py-2 border rounded-md border-error">
-                            <p className="text-error text-center font-semibold">
-                                Authentication failed!
-                            </p>
-                            <p className="text-error text-center font-semibold">
-                                Please try refreshing the page and fill the correct login details.
-                            </p>
-                        </div>
+                        <Alert severity="error" sx={{ marginBottom: "10px", borderRadius: "0.375rem" }}>
+                            <AlertTitle className="text-error">Authentication failed!</AlertTitle>
+                            Please try refreshing the page and fill the correct login details.
+                        </Alert>
                     )}
                     <label htmlFor="email" className="block mb-2">
                         Email Address
@@ -38,7 +37,7 @@ const Login = () => {
                         placeholder="Please enter email address"
                         value={values.email}
                         onChange={handleChange}
-                        className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                        className="input-form"
                     />
                 </div>
                 <div className="mb-8">
@@ -57,16 +56,16 @@ const Login = () => {
                         />
                         <div onClick={handleShowPw} className="cursor-pointer">
                             {!showPassword ? (
-                                <BiHide size={23} color="#0F2027" />
+                                <PwHideIcon />
                             ) : (
-                                <BiShow size={23} color="#0F2027" />
+                                <PwShowIcon />
                             )}
                         </div>
                     </div> 
                 </div>
                 <button 
                     type="submit"
-                    className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                    className="default-btn"
                 >
                     {isLoading ? "Loading..." : "Login"}
                 </button>
