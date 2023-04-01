@@ -1,35 +1,21 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useFormik } from 'formik';
 
-import { EmailSchema } from 'validations/index';
 import { WebTitle, SubTitle, ErrorField } from 'components';
-import { FORGET_PASSWORD } from 'constants/api';
+import useForgotPassword from './hook';
 
 const ForgetPassword = () => {
 
-    const navigate = useNavigate();
-
-    const onSubmit = async (values) => {
-        try {
-            await axios.post(`${FORGET_PASSWORD}`, values);
-            toast.success("Email Sent.");
-        } catch (error) {
-            navigate('*');
-        }
-    };
-
-    const { values, handleSubmit, handleChange, touched, errors, isSubmitting } = useFormik({
-        initialValues: {
-            email: '',
-        },
-        validateOnBlur: true,
-        onSubmit,
-        validationSchema: EmailSchema
-    });
+    const {
+        values,
+        handleSubmit,
+        handleChange,
+        touched,
+        errors,
+        isSubmitting
+    } = useForgotPassword();
 
     return (
         <>
@@ -50,13 +36,13 @@ const ForgetPassword = () => {
                                 placeholder="Please enter your email"
                                 value={values.email}
                                 onChange={handleChange}
-                                className="w-[100%] px-4 py-2 rounded-md border text-sm placeholder:text-sm focus:outline-none"
+                                className="input-form"
                             />
                         </div>
                         <button 
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                            className="default-btn"
                         >
                             Request
                         </button>
