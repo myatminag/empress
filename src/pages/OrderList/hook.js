@@ -64,6 +64,8 @@ const useOrderList = () => {
 
     const page = searchParams.get("page") || 1;
 
+    console.log("page", page);
+
     const [{ loading, error, ordersList, pages, loadingDelete, successDelete }, dispatch] = useReducer(orderListReducer, {
         loading: true,
         error: "",

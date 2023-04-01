@@ -99,7 +99,7 @@ const AdminItemList = () => {
                         {[...Array(pages).keys()].map((x) => (
                             <Link 
                                 key={x + 1}
-                                to={`/itemslist?page=${ x + 1 }`}
+                                to={`/items-list?page=${ x + 1 }`}
                             >
                                 <button 
                                     className={Number(page) === x + 1 ? "active-pagination-btn" : "pagination-btn"}

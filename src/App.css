@@ -40,7 +40,7 @@ body {
 }
 
 .pagination-btn {
-    @apply w-[30px] px-2 py-1 rounded-md;
+    @apply w-[30px] px-2 py-1 rounded-md border border-primaryDark;
 }
 
 .active-pagination-btn {

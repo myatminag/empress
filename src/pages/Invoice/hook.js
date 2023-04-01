@@ -164,7 +164,6 @@ const useInvoice = () => {
                     type: "SUCCESS_INVOICE",
                     payload: data
                 });
-                navigate('/orders-list');
             } catch (error) {
                 dispatch({
                     type: "FAIL_INVOICE",
@@ -230,6 +229,7 @@ const useInvoice = () => {
                 payload: data
             });
             toast.success('Success Delivery');
+            navigate('/orders-list');
         } catch (error) {   
             dispatch({ type: "FAIL_DELIVERY" });
             navigate('*');
@@ -249,7 +249,7 @@ const useInvoice = () => {
         onApprove,
         onError,
         deliverHandler
-    }
-}
+    };
+};
 
 export default useInvoice;

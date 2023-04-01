@@ -44,8 +44,7 @@ const Cart = () => {
                             <button 
                                 onClick={orderHandler}
                                 disabled={cartItems.length === 0}
-                                className="w-[100%] px-4 py-2 mb-6 text-sm text-white tracking-wider bg-primaryDark border 
-                                border-primaryDark hover:text-primaryDark hover:bg-white transition duration-200"
+                                className="default-btn"
                             >
                                 Order
                             </button>
