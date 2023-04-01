@@ -171,7 +171,6 @@ const AdminItemEdit = (props) => {
                                 </label>
                                 <input 
                                     type="file" 
-                                    required
                                     onChange={(e) => uploadImageHandler(e, true)}
                                     className="input-form"
                                 />
