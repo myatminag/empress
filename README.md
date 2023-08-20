@@ -3,6 +3,8 @@
 
 ![Empress](https://res.cloudinary.com/dqscrfky2/image/upload/v1681562399/Mockup_2_rubh08.png)
 
+A fully functional ecommerce built with mern stack that users can browse variety of products and also allow for secure online transaction using the integrated stripe gateway.
+
 ## Tech Stack
 
 **Client:** React.js, TailwindCSS, Formik, ReactQuery
