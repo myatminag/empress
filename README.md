@@ -32,13 +32,13 @@ A fully functional ecommerce built with mern stack that users can browse variety
 Clone the project
 
 ```bash
-git clone https://github.com/satnaing/e-commerce.git
+git clone https://github.com/myatminag/Empress.git
 ```
 
 Go to the project directory
 
 ```bash
-cd e-commerce
+cd Empress
 ```
 
 Remove remote origin
@@ -58,5 +58,3 @@ Start the server
 ```bash
 npm run start
 ```
-
-
