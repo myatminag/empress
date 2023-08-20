@@ -1,9 +1,7 @@
 
 # Empress eCommerce
 
-
-
-
+![Haru-Fashion Responsive Design (2)](https://user-images.githubusercontent.com/53733092/139094836-3c75c8fa-4f7a-43a7-b8c8-7cf45af53b71.png)
 
 ## Tech Stack
 
@@ -11,7 +9,7 @@
 
 **Server:** Node.js, Express.js, MongoDB
 
-**Deployment** Vercel
+**Deployment:** Vercel
 
 
 ## Features
