@@ -1,7 +1,7 @@
 
 # Empress eCommerce
 
-![Empress]([https://user-images.githubusercontent.com/53733092/139094836-3c75c8fa-4f7a-43a7-b8c8-7cf45af53b71.png](https://res.cloudinary.com/dqscrfky2/image/upload/v1681562399/Mockup_2_rubh08.png))
+![Empress](https://res.cloudinary.com/dqscrfky2/image/upload/v1681562399/Mockup_2_rubh08.png)
 
 ## Tech Stack
 
